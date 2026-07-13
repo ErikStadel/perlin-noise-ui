@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Organic Audio Animator — Mockup v4</title>
+<title>Organic Audio Animator — Mockup v5</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
@@ -17,14 +17,53 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   
+  /* Toggle Switch */
+  .toggle-container {
+    width: 48px;
+    height: 24px;
+    border-radius: 12px;
+    background: #2a2d36;
+    box-shadow: 
+      inset 3px 3px 6px rgba(0,0,0,0.5),
+      inset -3px -3px 6px rgba(255,255,255,0.04);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #3a3d48;
+    box-shadow: 
+      2px 2px 4px rgba(0,0,0,0.4),
+      -1px -1px 3px rgba(255,255,255,0.03);
+    transition: all 0.3s;
+  }
+  .toggle-container.active .toggle-knob {
+    left: 27px;
+    background: currentColor;
+    box-shadow: 
+      0 0 8px currentColor,
+      2px 2px 4px rgba(0,0,0,0.4);
+  }
+  
   /* Knob */
   .knob-container {
     position: relative;
     width: 110px;
     height: 110px;
     cursor: grab;
+    transition: opacity 0.3s;
   }
   .knob-container:active { cursor: grabbing; }
+  .knob-container.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
   .knob-body {
     width: 100%;
     height: 100%;
@@ -125,10 +164,6 @@
   <div class="viz-frame overflow-hidden relative mb-8" style="aspect-ratio: 21/9;">
     <canvas id="fluidCanvas" class="w-full h-full"></canvas>
     <div class="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-white/25">PERLIN FIELD</div>
-    <div class="absolute bottom-4 right-4 flex gap-4 text-[9px] tracking-[0.15em]">
-      <span class="text-white/20">A · SLOW / LARGE</span>
-      <span class="text-white/20">B · FAST / DETAIL</span>
-    </div>
   </div>
 
   <!-- Parameters -->
@@ -136,6 +171,9 @@
     
     <!-- MOTION -->
     <div class="flex flex-col items-center gap-3">
+      <div class="toggle-container active" data-toggle="motion" style="color: #06b6d4;">
+        <div class="toggle-knob"></div>
+      </div>
       <div class="knob-container" data-param="motion" data-value="35">
         <div class="knob-ring" style="border-color: #06b6d4;"></div>
         <div class="knob-body">
@@ -150,13 +188,16 @@
         <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color: #06b6d4; background: #06b6d4;"></div>
         <div class="mode-dot" data-mode="1" data-name="PULSE" style="color: #06b6d4;"></div>
         <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="3" data-name="SURGE" style="color: #06b6d4;"></div>
+        <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color: #06b6d4;"></div>
       </div>
       <div class="mode-name" data-mode-display="motion" style="color: #06b6d4;">FLOW</div>
     </div>
 
     <!-- TEXTURE -->
     <div class="flex flex-col items-center gap-3">
+      <div class="toggle-container active" data-toggle="texture" style="color: #f59e0b;">
+        <div class="toggle-knob"></div>
+      </div>
       <div class="knob-container" data-param="texture" data-value="60">
         <div class="knob-ring" style="border-color: #f59e0b;"></div>
         <div class="knob-body">
@@ -167,17 +208,21 @@
       <div class="text-center mt-2">
         <div class="param-label" style="color: #f59e0b;">TEXTURE</div>
       </div>
-      <div class="flex gap-3 mt-2" data-modes="texture">
-        <div class="mode-dot active" data-mode="0" data-name="SMOOTH" style="color: #f59e0b; background: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="1" data-name="GRAIN" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="2" data-name="FIBROUS" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="3" data-name="LIQUID" style="color: #f59e0b;"></div>
+      <div class="flex gap-2 mt-2" data-modes="texture">
+        <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color: #f59e0b; background: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="1" data-name="TAPE" style="color: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="3" data-name="WATER" style="color: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color: #f59e0b;"></div>
       </div>
-      <div class="mode-name" data-mode-display="texture" style="color: #f59e0b;">SMOOTH</div>
+      <div class="mode-name" data-mode-display="texture" style="color: #f59e0b;">BLOOM</div>
     </div>
 
     <!-- SHAPE -->
     <div class="flex flex-col items-center gap-3">
+      <div class="toggle-container active" data-toggle="shape" style="color: #ec4899;">
+        <div class="toggle-knob"></div>
+      </div>
       <div class="knob-container" data-param="shape" data-value="20">
         <div class="knob-ring" style="border-color: #ec4899;"></div>
         <div class="knob-body">
@@ -189,15 +234,19 @@
         <div class="param-label" style="color: #ec4899;">SHAPE</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="shape">
-        <div class="mode-dot active" data-mode="0" data-name="MORPH" style="color: #ec4899; background: #ec4899;"></div>
-        <div class="mode-dot" data-mode="1" data-name="FOLD" style="color: #ec4899;"></div>
-        <div class="mode-dot" data-mode="2" data-name="ERODE" style="color: #ec4899;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color: #ec4899; background: #ec4899;"></div>
+        <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color: #ec4899;"></div>
+        <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color: #ec4899;"></div>
+        <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color: #ec4899;"></div>
       </div>
-      <div class="mode-name" data-mode-display="shape" style="color: #ec4899;">MORPH</div>
+      <div class="mode-name" data-mode-display="shape" style="color: #ec4899;">ORGANIC</div>
     </div>
 
     <!-- SPACE -->
     <div class="flex flex-col items-center gap-3">
+      <div class="toggle-container active" data-toggle="space" style="color: #6366f1;">
+        <div class="toggle-knob"></div>
+      </div>
       <div class="knob-container" data-param="space" data-value="75">
         <div class="knob-ring" style="border-color: #6366f1;"></div>
         <div class="knob-body">
@@ -209,12 +258,12 @@
         <div class="param-label" style="color: #6366f1;">SPACE</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="space">
-        <div class="mode-dot active" data-mode="0" data-name="NEAR" style="color: #6366f1; background: #6366f1;"></div>
-        <div class="mode-dot" data-mode="1" data-name="WIDE" style="color: #6366f1;"></div>
-        <div class="mode-dot" data-mode="2" data-name="DEEP" style="color: #6366f1;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color: #6366f1; background: #6366f1;"></div>
+        <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color: #6366f1;"></div>
+        <div class="mode-dot" data-mode="2" data-name="WIDE" style="color: #6366f1;"></div>
         <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color: #6366f1;"></div>
       </div>
-      <div class="mode-name" data-mode-display="space" style="color: #6366f1;">NEAR</div>
+      <div class="mode-name" data-mode-display="space" style="color: #6366f1;">ROOM</div>
     </div>
 
   </div>
@@ -294,10 +343,10 @@ const ctx = canvas.getContext('2d');
 
 // Parameter state
 const state = {
-  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0 },
-  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1 },
-  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2 },
-  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3 },
+  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0, active: true },
+  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1, active: true },
+  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2, active: true },
+  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3, active: true },
 };
 
 function resize() {
@@ -307,6 +356,22 @@ function resize() {
 }
 window.addEventListener('resize', resize);
 resize();
+
+// Toggle interaction
+document.querySelectorAll('.toggle-container').forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const param = toggle.dataset.toggle;
+    const isActive = toggle.classList.toggle('active');
+    state[param].active = isActive;
+    
+    const knob = document.querySelector(`.knob-container[data-param="${param}"]`);
+    if (isActive) {
+      knob.classList.remove('disabled');
+    } else {
+      knob.classList.add('disabled');
+    }
+  });
+});
 
 // Knob interaction
 document.querySelectorAll('.knob-container').forEach(knob => {
@@ -326,6 +391,7 @@ document.querySelectorAll('.knob-container').forEach(knob => {
   updateVisual();
   
   knob.addEventListener('mousedown', e => {
+    if (knob.classList.contains('disabled')) return;
     isDragging = true;
     startY = e.clientY;
     startValue = +knob.dataset.value;
@@ -364,7 +430,7 @@ document.querySelectorAll('[data-modes]').forEach(group => {
   });
 });
 
-// Weiche Überlappungsfunktion für die Zonen - jetzt 25% Überlappung
+// Weiche Überlappungsfunktion für die Zonen
 function zoneWeight(x, zoneCenter, zoneWidth) {
   const dist = Math.abs(x - zoneCenter);
   if (dist > zoneWidth) return 0;
@@ -401,6 +467,9 @@ function render() {
       
       // Für jeden Parameter seine Zone berechnen
       for (const [key, param] of Object.entries(state)) {
+        // Wenn Parameter deaktiviert, überspringen
+        if (!param.active) continue;
+        
         const zoneCenter = (param.zone + 0.5) / 4;
         const weight = zoneWeight(nx, zoneCenter, zoneWidth);
         
