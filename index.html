@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Organic Audio Animator — Mockup v7</title>
+<title>Organic Audio Animator — Mockup v8</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
@@ -84,6 +84,84 @@
       3px 3px 6px rgba(0,0,0,0.5),
       -3px -3px 6px rgba(255,255,255,0.04);
     text-shadow: 0 0 8px rgba(255,255,255,0.3);
+  }
+  
+  /* Memory Orb */
+  .memory-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .memory-container:active { cursor: grabbing; }
+  .memory-orb {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), transparent);
+    box-shadow: 
+      inset 0 0 40px rgba(0,0,0,0.6),
+      0 0 60px rgba(139, 92, 246, 0.2);
+    transition: all 0.3s;
+  }
+  .memory-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed);
+    box-shadow: 
+      0 0 20px rgba(167, 139, 250, 0.6),
+      0 0 40px rgba(124, 58, 237, 0.4);
+    transition: all 0.3s;
+  }
+  .memory-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    opacity: 0;
+    animation: pulse-ring 3s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0% {
+      width: 40px;
+      height: 40px;
+      opacity: 0.8;
+    }
+    100% {
+      width: 140px;
+      height: 140px;
+      opacity: 0;
+    }
+  }
+  .memory-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: #a78bfa;
+    white-space: nowrap;
+  }
+  .memory-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    white-space: nowrap;
   }
   
   /* Knob */
@@ -181,7 +259,7 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
-<div class="plugin-frame rounded-3xl p-8 w-full max-w-5xl">
+<div class="plugin-frame rounded-3xl p-8 w-full max-w-6xl">
   
   <!-- Header -->
   <div class="flex items-center justify-between mb-6">
@@ -210,10 +288,33 @@
     </div>
   </div>
 
-  <!-- Visualization -->
-  <div class="viz-frame overflow-hidden relative mb-8" style="aspect-ratio: 21/9;">
-    <canvas id="fluidCanvas" class="w-full h-full"></canvas>
-    <div class="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-white/25">PERLIN FIELD</div>
+  <!-- Visualization + Memory Orb -->
+  <div class="grid grid-cols-12 gap-6 mb-8">
+    <!-- Perlin Field -->
+    <div class="col-span-9">
+      <div class="viz-frame overflow-hidden relative" style="aspect-ratio: 21/9;">
+        <canvas id="fluidCanvas" class="w-full h-full"></canvas>
+        <div class="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-white/25">PERLIN FIELD</div>
+        <div class="absolute bottom-4 right-4 flex gap-4 text-[9px] tracking-[0.15em]">
+          <span class="text-white/20">A · SLOW / LARGE</span>
+          <span class="text-white/20">B · FAST / DETAIL</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Memory Orb -->
+    <div class="col-span-3 flex items-center justify-center">
+      <div class="memory-container" id="memoryOrb" data-value="50">
+        <div class="memory-value" data-memory-display>50%</div>
+        <div class="memory-orb">
+          <div class="memory-core" id="memoryCore"></div>
+          <div class="memory-ring" style="animation-delay: 0s;"></div>
+          <div class="memory-ring" style="animation-delay: 1s;"></div>
+          <div class="memory-ring" style="animation-delay: 2s;"></div>
+        </div>
+        <div class="memory-label">MEMORY</div>
+      </div>
+    </div>
   </div>
 
   <!-- Parameters -->
@@ -397,7 +498,8 @@ const state = {
   texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1, active: true },
   shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2, active: true },
   space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3, active: true },
-  focus: 'recent' // recent, balanced, ancient
+  memory: 50,
+  focus: 'recent'
 };
 
 // Transition effects
@@ -466,7 +568,6 @@ const modeCharacteristics = {
   ]
 };
 
-// Focus characteristics - affects how the field behaves
 const focusCharacteristics = {
   recent: { timeScale: 1.0, decay: 0.0, freshness: 1.0 },
   balanced: { timeScale: 0.7, decay: 0.5, freshness: 0.5 },
@@ -481,15 +582,68 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
+// Memory Orb interaction
+const memoryOrb = document.getElementById('memoryOrb');
+const memoryCore = document.getElementById('memoryCore');
+const memoryDisplay = document.querySelector('[data-memory-display]');
+let memoryDragging = false;
+let memoryStartY = 0;
+let memoryStartValue = 0;
+
+function updateMemoryVisual() {
+  const value = state.memory;
+  memoryDisplay.textContent = Math.round(value) + '%';
+  
+  // Core size: 20px (low) to 80px (high)
+  const coreSize = 20 + (value / 100) * 60;
+  memoryCore.style.width = coreSize + 'px';
+  memoryCore.style.height = coreSize + 'px';
+  
+  // Glow intensity
+  const glowIntensity = 0.3 + (value / 100) * 0.7;
+  memoryCore.style.boxShadow = `
+    0 0 ${20 * glowIntensity}px rgba(167, 139, 250, ${0.6 * glowIntensity}),
+    0 0 ${40 * glowIntensity}px rgba(124, 58, 237, ${0.4 * glowIntensity})
+  `;
+  
+  // Ring animation speed: faster at high values
+  const rings = document.querySelectorAll('.memory-ring');
+  rings.forEach((ring, i) => {
+    const duration = 3 - (value / 100) * 2; // 3s to 1s
+    ring.style.animationDuration = duration + 's';
+    ring.style.opacity = glowIntensity * 0.5;
+  });
+}
+
+updateMemoryVisual();
+
+memoryOrb.addEventListener('mousedown', e => {
+  memoryDragging = true;
+  memoryStartY = e.clientY;
+  memoryStartValue = state.memory;
+  e.preventDefault();
+});
+
+window.addEventListener('mousemove', e => {
+  if (!memoryDragging) return;
+  const delta = (memoryStartY - e.clientY) * 0.5;
+  const newValue = Math.max(0, Math.min(100, memoryStartValue + delta));
+  state.memory = newValue;
+  memoryOrb.dataset.value = newValue;
+  updateMemoryVisual();
+});
+
+window.addEventListener('mouseup', () => {
+  memoryDragging = false;
+});
+
 // Focus switch interaction
 document.querySelectorAll('.focus-option').forEach(option => {
   option.addEventListener('click', () => {
     document.querySelectorAll('.focus-option').forEach(o => o.classList.remove('active'));
     option.classList.add('active');
     state.focus = option.dataset.focus;
-    document.querySelector('[data-focus-display]').textContent = option.dataset.focus.toUpperCase();
     
-    // Visual feedback for focus change
     if (state.focus === 'recent') addTransition('wind', 'focus', 0.6);
     else if (state.focus === 'ancient') addTransition('pulse', 'focus', 1.2);
   });
@@ -546,7 +700,7 @@ document.querySelectorAll('.knob-container').forEach(knob => {
   });
 });
 
-// Mode dot interaction with transition effects
+// Mode dot interaction
 document.querySelectorAll('[data-modes]').forEach(group => {
   const param = group.dataset.modes;
   const display = document.querySelector(`[data-mode-display="${param}"]`);
@@ -591,7 +745,6 @@ function render() {
   
   const currentTime = performance.now() / 1000;
   
-  // Focus affects time progression
   const focusChar = focusCharacteristics[state.focus];
   t += 0.008 * focusChar.timeScale;
   
@@ -611,6 +764,9 @@ function render() {
   const textureChar = modeCharacteristics.texture[state.texture.mode];
   const shapeChar = modeCharacteristics.shape[state.shape.mode];
   const spaceChar = modeCharacteristics.space[state.space.mode];
+  
+  // Memory affects persistence/layering
+  const memoryPersistence = state.memory / 100;
   
   const zoneWidth = 0.25;
   
@@ -632,7 +788,6 @@ function render() {
         distortX += Math.sin(ny * 10 + t * 3) * transEffect.wind * 0.03;
       }
       
-      // Focus "decay" effect - ancient memories fade at edges
       let focusFade = 1.0;
       if (focusChar.decay > 0) {
         const distFromCenter = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.5, 2));
@@ -644,7 +799,7 @@ function render() {
       const adjNy = ny + distortY;
       
       for (const [key, param] of Object.entries(state)) {
-        if (key === 'focus' || !param.active) continue;
+        if (key === 'focus' || key === 'memory' || !param.active) continue;
         
         const zoneCenter = (param.zone + 0.5) / 4;
         const weight = zoneWeight(adjNx, zoneCenter, zoneWidth);
@@ -690,7 +845,13 @@ function render() {
         
         let v = vA * (1 - mix) + vB * mix;
         
-        // Ancient focus: add "ghost" layer - older memory echoes
+        // Memory persistence: add "echo" layers
+        if (memoryPersistence > 0.3) {
+          const echo1 = perlinA.noise(adjNx * 2, adjNy * 2, t * 0.1) * memoryPersistence * 0.2;
+          const echo2 = perlinB.noise(adjNx * 1.5, adjNy * 1.5, t * 0.05) * memoryPersistence * 0.15;
+          v += echo1 + echo2;
+        }
+        
         if (focusChar.decay > 0.3) {
           const ghost = perlinA.noise(adjNx * 1.5, adjNy * 1.5, t * 0.05) * focusChar.decay * 0.3;
           v += ghost;
