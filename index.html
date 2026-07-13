@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Organic Audio Animator — Mockup v2</title>
+<title>Organic Audio Animator — Mockup v3</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
@@ -20,20 +20,6 @@
   /* Neumorphic base */
   .neu-bg {
     background: #1e2028;
-  }
-  .neu-raised {
-    background: #1e2028;
-    box-shadow: 
-      8px 8px 16px rgba(0,0,0,0.6),
-      -8px -8px 16px rgba(255,255,255,0.03);
-    border-radius: 50%;
-  }
-  .neu-pressed {
-    background: #1e2028;
-    box-shadow: 
-      inset 4px 4px 8px rgba(0,0,0,0.5),
-      inset -4px -4px 8px rgba(255,255,255,0.02);
-    border-radius: 50%;
   }
   
   /* Knob */
@@ -143,12 +129,6 @@
   <div class="viz-frame overflow-hidden relative mb-8" style="aspect-ratio: 21/9;">
     <canvas id="fluidCanvas" class="w-full h-full"></canvas>
     <div class="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-white/25">PERLIN FIELD</div>
-    <div class="absolute bottom-4 left-4 flex gap-6 text-[9px] tracking-[0.15em]">
-      <span class="text-cyan-400/50">MOTION</span>
-      <span class="text-amber-400/50">TEXTURE</span>
-      <span class="text-pink-400/50">SHAPE</span>
-      <span class="text-indigo-400/50">SPACE</span>
-    </div>
     <div class="absolute bottom-4 right-4 flex gap-4 text-[9px] tracking-[0.15em]">
       <span class="text-white/20">A · SLOW / LARGE</span>
       <span class="text-white/20">B · FAST / DETAIL</span>
@@ -256,8 +236,8 @@
 </div>
 
 <script>
-// --- Perlin Noise ---
-class PerlinNoise {
+// --- 3D Perlin Noise ---
+class PerlinNoise3D {
   constructor(seed = 0) {
     this.perm = new Uint8Array(512);
     const p = new Uint8Array(256);
@@ -272,41 +252,56 @@ class PerlinNoise {
   }
   fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
   lerp(a, b, t) { return a + t * (b - a); }
-  grad(hash, x, y) {
-    const h = hash & 3;
-    const u = h < 2 ? x : y;
-    const v = h < 2 ? y : x;
-    return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+  grad(hash, x, y, z) {
+    const h = hash & 15;
+    const u = h < 8 ? x : y;
+    const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+    return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
   }
-  noise(x, y) {
+  noise(x, y, z) {
     const X = Math.floor(x) & 255;
     const Y = Math.floor(y) & 255;
+    const Z = Math.floor(z) & 255;
     x -= Math.floor(x);
     y -= Math.floor(y);
+    z -= Math.floor(z);
     const u = this.fade(x);
     const v = this.fade(y);
+    const w = this.fade(z);
     const A = this.perm[X] + Y;
+    const AA = this.perm[A] + Z;
+    const AB = this.perm[A + 1] + Z;
     const B = this.perm[X + 1] + Y;
+    const BA = this.perm[B] + Z;
+    const BB = this.perm[B + 1] + Z;
     return this.lerp(
-      this.lerp(this.grad(this.perm[A], x, y), this.grad(this.perm[B], x - 1, y), u),
-      this.lerp(this.grad(this.perm[A + 1], x, y - 1), this.grad(this.perm[B + 1], x - 1, y - 1), u),
-      v
+      this.lerp(
+        this.lerp(this.grad(this.perm[AA], x, y, z), this.grad(this.perm[BA], x - 1, y, z), u),
+        this.lerp(this.grad(this.perm[AB], x, y - 1, z), this.grad(this.perm[BB], x - 1, y - 1, z), u),
+        v
+      ),
+      this.lerp(
+        this.lerp(this.grad(this.perm[AA + 1], x, y, z - 1), this.grad(this.perm[BA + 1], x - 1, y, z - 1), u),
+        this.lerp(this.grad(this.perm[AB + 1], x, y - 1, z - 1), this.grad(this.perm[BB + 1], x - 1, y - 1, z - 1), u),
+        v
+      ),
+      w
     );
   }
 }
 
-const perlinA = new PerlinNoise(42);
-const perlinB = new PerlinNoise(137);
+const perlinA = new PerlinNoise3D(42);
+const perlinB = new PerlinNoise3D(137);
 
 const canvas = document.getElementById('fluidCanvas');
 const ctx = canvas.getContext('2d');
 
-// Parameter state
+// Parameter state - Farbe ist immer voll gesättigt, nur Motion ändert sich
 const state = {
-  motion: { value: 35, mix: 0, mode: 0, color: [6, 182, 212] },    // cyan
-  texture: { value: 60, mix: 0, mode: 0, color: [245, 158, 11] },  // amber
-  shape: { value: 20, mix: 0, mode: 0, color: [236, 72, 153] },    // pink
-  space: { value: 75, mix: 0, mode: 0, color: [99, 102, 241] },    // indigo
+  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0 },      // cyan - linke Zone
+  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1 },    // amber - zweite Zone
+  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2 },      // pink - dritte Zone
+  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3 },      // indigo - rechte Zone
 };
 
 function resize() {
@@ -370,23 +365,33 @@ document.querySelectorAll('[data-modes]').forEach(group => {
   });
 });
 
+// Weiche Überlappungsfunktion für die Zonen
+function zoneWeight(x, zoneCenter, zoneWidth) {
+  const dist = Math.abs(x - zoneCenter);
+  if (dist > zoneWidth) return 0;
+  return Math.cos((dist / zoneWidth) * Math.PI * 0.5);
+}
+
 let t = 0;
 function render() {
   const W = canvas.width;
   const H = canvas.height;
   
-  t += 0.003;
+  t += 0.008;
   
   // Dark background
   ctx.fillStyle = '#0a0b0f';
   ctx.fillRect(0, 0, W, H);
   
-  const step = 5;
+  const step = 4;
   const cols = Math.ceil(W / step);
   const rows = Math.ceil(H / step);
   
   const imgData = ctx.createImageData(W, H);
   const data = imgData.data;
+  
+  // 4 Zonen-Zentren (0.125, 0.375, 0.625, 0.875) mit weicher Überlappung
+  const zoneWidth = 0.35; // Überlappungsbereich
   
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
@@ -395,39 +400,43 @@ function render() {
       
       let r = 0, g = 0, b = 0;
       
-      // For each parameter, compute its contribution
+      // Für jeden Parameter seine Zone berechnen
       for (const [key, param] of Object.entries(state)) {
+        const zoneCenter = (param.zone + 0.5) / 4; // 0.125, 0.375, 0.625, 0.875
+        const weight = zoneWeight(nx, zoneCenter, zoneWidth);
+        
+        if (weight < 0.01) continue;
+        
         const mix = param.value / 100; // 0 = A, 1 = B
-        const amount = mix; // How much of this color to add
         
-        if (amount < 0.01) continue;
-        
-        // A: slow, large structures
-        const scaleA = 1.5 + (1 - mix) * 1.5;
-        const speedA = 0.1;
+        // A: langsam, große Strukturen (niedrige Frequenz, langsame Zeit)
+        const scaleA = 2.0;
+        const speedA = 0.15;
         const vA = perlinA.noise(
-          nx * scaleA + t * speedA,
-          ny * scaleA + t * speedA * 0.7
+          nx * scaleA,
+          ny * scaleA,
+          t * speedA
         );
         
-        // B: fast, detailed
-        const scaleB = 4.0 + mix * 6.0;
-        const speedB = 0.4 + mix * 0.8;
+        // B: schnell, detaillierte Strukturen (höhere Frequenz, schnellere Zeit)
+        const scaleB = 5.0 + mix * 3.0;
+        const speedB = 0.5 + mix * 0.5;
         const vB = perlinB.noise(
-          nx * scaleB + t * speedB,
-          ny * scaleB + t * speedB * 0.8
+          nx * scaleB,
+          ny * scaleB,
+          t * speedB
         );
         
-        // Blend A and B based on the parameter's mix
+        // Blend zwischen A und B basierend auf dem Parameter-Wert
         const v = vA * (1 - mix) + vB * mix;
         
-        // Normalize to 0-1
-        const intensity = (v + 1) / 2;
+        // Intensität ist immer voll, nur die Motion-Charakteristik ändert sich
+        const intensity = (v + 1) / 2; // 0-1
         
-        // Add this parameter's color contribution
-        r += param.color[0] * intensity * amount * 0.6;
-        g += param.color[1] * intensity * amount * 0.6;
-        b += param.color[2] * intensity * amount * 0.6;
+        // Farbe mit voller Sättigung hinzufügen, gewichtet nach Zone
+        r += param.color[0] * intensity * weight;
+        g += param.color[1] * intensity * weight;
+        b += param.color[2] * intensity * weight;
       }
       
       // Fill pixels
@@ -448,7 +457,7 @@ function render() {
   // Vignette
   const grad = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.6);
   grad.addColorStop(0, 'rgba(0,0,0,0)');
-  grad.addColorStop(1, 'rgba(0,0,0,0.6)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.5)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
   
