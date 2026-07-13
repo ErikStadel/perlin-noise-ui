@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Organic Audio Animator — Mockup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0a0f;
+    color: #e8e8ee;
+    overflow: hidden;
+  }
+  .plugin-frame {
+    background: linear-gradient(145deg, #14141c 0%, #0c0c14 100%);
+    border: 1px solid #2a2a3a;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .knob-track {
+    background: linear-gradient(180deg, #1a1a28 0%, #0f0f18 100%);
+    border: 1px solid #2a2a3a;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .knob-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6fa5 0%, #a855f7 100%);
+    border-radius: 2px;
+    outline: none;
+  }
+  .knob-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #c8c8d8 50%, #8888a0 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.3);
+    border: 1px solid #1a1a28;
+  }
+  .knob-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #c8c8d8 50%, #8888a0 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    border: 1px solid #1a1a28;
+  }
+  .mode-pill {
+    background: #1a1a28;
+    border: 1px solid #2a2a3a;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .mode-pill.active {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+  }
+  .viz-frame {
+    background: #05050a;
+    border: 1px solid #2a2a3a;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 30px rgba(99, 102, 241, 0.1);
+  }
+  .label-ab {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: #6a6a80;
+  }
+  .label-ab .a { color: #4a6fa5; }
+  .label-ab .b { color: #a855f7; }
+  canvas { display: block; }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+<div class="plugin-frame rounded-2xl p-8 w-full max-w-5xl">
+  
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-xl font-light tracking-widest text-white/90">ORGANIC AUDIO ANIMATOR</h1>
+      <p class="text-xs tracking-wider text-white/40 mt-1">Fluid · Living · Breathing</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+      <span class="text-xs tracking-widest text-white/50">ACTIVE</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-6">
+    
+    <!-- Visualization -->
+    <div class="col-span-7">
+      <div class="viz-frame rounded-xl overflow-hidden relative" style="aspect-ratio: 16/10;">
+        <canvas id="fluidCanvas" class="w-full h-full"></canvas>
+        <div class="absolute top-3 left-3 text-[10px] tracking-widest text-white/30">PERLIN FIELD</div>
+        <div class="absolute bottom-3 left-3 flex gap-4 text-[10px] tracking-widest">
+          <span class="text-blue-400/70">A · SLOW / LARGE</span>
+          <span class="text-purple-400/70">B · FAST / DETAIL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="col-span-5 space-y-3">
+      
+      <!-- MOTION -->
+      <div class="knob-track rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs tracking-widest text-white/80 font-medium">MOTION</span>
+            <span class="text-[10px] text-white/30">How the sound moves</span>
+          </div>
+          <span class="text-[10px] label-ab"><span class="a">A</span> → <span class="b">B</span></span>
+        </div>
+        <input type="range" min="0" max="100" value="35" class="knob-slider motion-slider">
+        <div class="flex gap-1 mt-3">
+          <button class="mode-pill active text-[10px] px-2 py-1 rounded text-white/80">FLOW</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">PULSE</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">DRIFT</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">SURGE</button>
+        </div>
+      </div>
+
+      <!-- TEXTURE -->
+      <div class="knob-track rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs tracking-widest text-white/80 font-medium">TEXTURE</span>
+            <span class="text-[10px] text-white/30">What the sound is made of</span>
+          </div>
+          <span class="text-[10px] label-ab"><span class="a">A</span> → <span class="b">B</span></span>
+        </div>
+        <input type="range" min="0" max="100" value="60" class="knob-slider texture-slider">
+        <div class="flex gap-1 mt-3">
+          <button class="mode-pill active text-[10px] px-2 py-1 rounded text-white/80">SMOOTH</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">GRAIN</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">FIBROUS</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">LIQUID</button>
+        </div>
+      </div>
+
+      <!-- SHAPE -->
+      <div class="knob-track rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs tracking-widest text-white/80 font-medium">SHAPE</span>
+            <span class="text-[10px] text-white/30">How structure is altered</span>
+          </div>
+          <span class="text-[10px] label-ab"><span class="a">A</span> → <span class="b">B</span></span>
+        </div>
+        <input type="range" min="0" max="100" value="20" class="knob-slider shape-slider">
+        <div class="flex gap-1 mt-3">
+          <button class="mode-pill active text-[10px] px-2 py-1 rounded text-white/80">MORPH</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">FOLD</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">ERODE</button>
+        </div>
+      </div>
+
+      <!-- SPACE -->
+      <div class="knob-track rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs tracking-widest text-white/80 font-medium">SPACE</span>
+            <span class="text-[10px] text-white/30">How it unfolds in space</span>
+          </div>
+          <span class="text-[10px] label-ab"><span class="a">A</span> → <span class="b">B</span></span>
+        </div>
+        <input type="range" min="0" max="100" value="75" class="knob-slider space-slider">
+        <div class="flex gap-1 mt-3">
+          <button class="mode-pill active text-[10px] px-2 py-1 rounded text-white/80">NEAR</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">WIDE</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">DEEP</button>
+          <button class="mode-pill text-[10px] px-2 py-1 rounded text-white/50">INFINITE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[10px] tracking-widest text-white/30">
+    <span>PRESET: INK IN WATER</span>
+    <div class="flex gap-4">
+      <span>◀ PREV</span>
+      <span>SAVE</span>
+      <span>NEXT ▶</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// --- Simple Perlin Noise ---
+class PerlinNoise {
+  constructor(seed = 0) {
+    this.perm = new Uint8Array(512);
+    const p = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) p[i] = i;
+    let n = seed || Math.random() * 65536;
+    for (let i = 255; i > 0; i--) {
+      n = (n * 16807) % 2147483647;
+      const j = n % (i + 1);
+      [p[i], p[j]] = [p[j], p[i]];
+    }
+    for (let i = 0; i < 512; i++) this.perm[i] = p[i & 255];
+  }
+  fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+  lerp(a, b, t) { return a + t * (b - a); }
+  grad(hash, x, y) {
+    const h = hash & 3;
+    const u = h < 2 ? x : y;
+    const v = h < 2 ? y : x;
+    return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+  }
+  noise(x, y) {
+    const X = Math.floor(x) & 255;
+    const Y = Math.floor(y) & 255;
+    x -= Math.floor(x);
+    y -= Math.floor(y);
+    const u = this.fade(x);
+    const v = this.fade(y);
+    const A = this.perm[X] + Y;
+    const B = this.perm[X + 1] + Y;
+    return this.lerp(
+      this.lerp(this.grad(this.perm[A], x, y), this.grad(this.perm[B], x - 1, y), u),
+      this.lerp(this.grad(this.perm[A + 1], x, y - 1), this.grad(this.perm[B + 1], x - 1, y - 1), u),
+      v
+    );
+  }
+}
+
+const perlinA = new PerlinNoise(42);
+const perlinB = new PerlinNoise(137);
+
+const canvas = document.getElementById('fluidCanvas');
+const ctx = canvas.getContext('2d');
+
+// Parameter state
+const state = {
+  motion: 35,
+  texture: 60,
+  shape: 20,
+  space: 75,
+};
+
+function resize() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * devicePixelRatio;
+  canvas.height = rect.height * devicePixelRatio;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Slider bindings
+document.querySelectorAll('.motion-slider, .texture-slider, .shape-slider, .space-slider').forEach(s => {
+  s.addEventListener('input', e => {
+    const key = e.target.className.split('-')[0];
+    state[key] = +e.target.value;
+  });
+});
+
+// Mode pill toggles
+document.querySelectorAll('.mode-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const siblings = pill.parentElement.querySelectorAll('.mode-pill');
+    siblings.forEach(s => s.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+
+let t = 0;
+function render() {
+  const W = canvas.width;
+  const H = canvas.height;
+  
+  // Mix factor: 0 = pure A, 1 = pure B
+  const mix = 0.5; // base blend
+  const motionMix = state.motion / 100;
+  const textureMix = state.texture / 100;
+  const shapeMix = state.shape / 100;
+  const spaceMix = state.space / 100;
+  
+  t += 0.004;
+  
+  // Background
+  ctx.fillStyle = '#05050a';
+  ctx.fillRect(0, 0, W, H);
+  
+  // Resolution of the fluid field
+  const step = 6;
+  const cols = Math.ceil(W / step);
+  const rows = Math.ceil(H / step);
+  
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const nx = x / cols;
+      const ny = y / rows;
+      
+      // Perlin A: slow, large structures
+      const scaleA = 2.0 + (1 - shapeMix) * 2.0;
+      const speedA = 0.15;
+      const vA = perlinA.noise(
+        nx * scaleA + t * speedA,
+        ny * scaleA + t * speedA * 0.7
+      );
+      
+      // Perlin B: fast, detailed
+      const scaleB = 6.0 + textureMix * 8.0;
+      const speedB = 0.6 + textureMix * 0.8;
+      const vB = perlinB.noise(
+        nx * scaleB + t * speedB,
+        ny * scaleB + t * speedB * 0.8
+      );
+      
+      // Blend A and B based on motion slider (A=slow/large, B=fast/detail)
+      const v = vA * (1 - motionMix * 0.6) + vB * motionMix * 0.8;
+      
+      // Shape affects contrast / structure deformation
+      const shaped = Math.pow(Math.abs(v), 1.5 - shapeMix) * Math.sign(v);
+      
+      // Space affects color spread / depth
+      const depth = 0.5 + shaped * (0.5 + spaceMix * 0.8);
+      
+      // Color: blend between cool blue (A) and purple/magenta (B)
+      const colorMix = (shaped + 1) / 2;
+      const r = Math.floor(30 + colorMix * 120 + spaceMix * 40);
+      const g = Math.floor(50 + (1 - colorMix) * 60 + shaped * 30);
+      const b = Math.floor(120 + colorMix * 100 + spaceMix * 30);
+      const alpha = 0.4 + Math.abs(shaped) * 0.6;
+      
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      ctx.fillRect(x * step, y * step, step, step);
+    }
+  }
+  
+  // Subtle vignette
+  const grad = ctx.createRadialGradient(W/2, H/2, W*0.2, W/2, H/2, W*0.7);
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.7)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+  
+  requestAnimationFrame(render);
+}
+render();
+</script>
+
+</body>
+</html>
