@@ -2,24 +2,19 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Organic Audio Animator — Mockup v3</title>
+<title>Organic Audio Animator — Mockup v4</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background: #1a1c23;
+    background: #252830;
     color: #e8e8ee;
     overflow: hidden;
   }
   .plugin-frame {
-    background: #1e2028;
-    border: 1px solid #2a2d38;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
-  }
-  
-  /* Neumorphic base */
-  .neu-bg {
-    background: #1e2028;
+    background: #2a2d36;
+    border: 1px solid #3a3d48;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   
   /* Knob */
@@ -34,20 +29,20 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: #1e2028;
+    background: #2a2d36;
     box-shadow: 
-      10px 10px 20px rgba(0,0,0,0.7),
-      -10px -10px 20px rgba(255,255,255,0.04);
+      10px 10px 20px rgba(0,0,0,0.55),
+      -10px -10px 20px rgba(255,255,255,0.06);
     position: relative;
   }
   .knob-inner {
     position: absolute;
     top: 12px; left: 12px; right: 12px; bottom: 12px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #22242c 0%, #1a1c22 100%);
+    background: linear-gradient(145deg, #2e313a 0%, #24272f 100%);
     box-shadow: 
-      inset 4px 4px 8px rgba(0,0,0,0.4),
-      inset -2px -2px 6px rgba(255,255,255,0.02);
+      inset 4px 4px 8px rgba(0,0,0,0.35),
+      inset -2px -2px 6px rgba(255,255,255,0.04);
   }
   .knob-indicator {
     position: absolute;
@@ -72,10 +67,10 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #1e2028;
+    background: #2a2d36;
     box-shadow: 
-      2px 2px 4px rgba(0,0,0,0.5),
-      -2px -2px 4px rgba(255,255,255,0.03);
+      2px 2px 4px rgba(0,0,0,0.45),
+      -2px -2px 4px rgba(255,255,255,0.04);
     cursor: pointer;
     transition: all 0.2s;
   }
@@ -88,10 +83,10 @@
   /* Viz */
   .viz-frame {
     background: #0a0b0f;
-    border: 1px solid #2a2d38;
+    border: 1px solid #3a3d48;
     box-shadow: 
       inset 0 0 60px rgba(0,0,0,0.8),
-      0 0 40px rgba(0,0,0,0.4);
+      0 0 40px rgba(0,0,0,0.3);
     border-radius: 16px;
   }
   
@@ -102,10 +97,11 @@
     letter-spacing: 0.2em;
     font-weight: 500;
   }
-  .param-desc {
+  .mode-name {
     font-size: 9px;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    min-height: 12px;
   }
 </style>
 </head>
@@ -149,14 +145,14 @@
       </div>
       <div class="text-center mt-2">
         <div class="param-label" style="color: #06b6d4;">MOTION</div>
-        <div class="param-desc mt-1">How it moves</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="motion">
-        <div class="mode-dot active" data-mode="0" style="color: #06b6d4; background: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="1" style="color: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="2" style="color: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="3" style="color: #06b6d4;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color: #06b6d4; background: #06b6d4;"></div>
+        <div class="mode-dot" data-mode="1" data-name="PULSE" style="color: #06b6d4;"></div>
+        <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color: #06b6d4;"></div>
+        <div class="mode-dot" data-mode="3" data-name="SURGE" style="color: #06b6d4;"></div>
       </div>
+      <div class="mode-name" data-mode-display="motion" style="color: #06b6d4;">FLOW</div>
     </div>
 
     <!-- TEXTURE -->
@@ -170,14 +166,14 @@
       </div>
       <div class="text-center mt-2">
         <div class="param-label" style="color: #f59e0b;">TEXTURE</div>
-        <div class="param-desc mt-1">What it's made of</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="texture">
-        <div class="mode-dot active" data-mode="0" style="color: #f59e0b; background: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="1" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="2" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="3" style="color: #f59e0b;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="SMOOTH" style="color: #f59e0b; background: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="1" data-name="GRAIN" style="color: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="2" data-name="FIBROUS" style="color: #f59e0b;"></div>
+        <div class="mode-dot" data-mode="3" data-name="LIQUID" style="color: #f59e0b;"></div>
       </div>
+      <div class="mode-name" data-mode-display="texture" style="color: #f59e0b;">SMOOTH</div>
     </div>
 
     <!-- SHAPE -->
@@ -191,13 +187,13 @@
       </div>
       <div class="text-center mt-2">
         <div class="param-label" style="color: #ec4899;">SHAPE</div>
-        <div class="param-desc mt-1">How structure bends</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="shape">
-        <div class="mode-dot active" data-mode="0" style="color: #ec4899; background: #ec4899;"></div>
-        <div class="mode-dot" data-mode="1" style="color: #ec4899;"></div>
-        <div class="mode-dot" data-mode="2" style="color: #ec4899;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="MORPH" style="color: #ec4899; background: #ec4899;"></div>
+        <div class="mode-dot" data-mode="1" data-name="FOLD" style="color: #ec4899;"></div>
+        <div class="mode-dot" data-mode="2" data-name="ERODE" style="color: #ec4899;"></div>
       </div>
+      <div class="mode-name" data-mode-display="shape" style="color: #ec4899;">MORPH</div>
     </div>
 
     <!-- SPACE -->
@@ -211,14 +207,14 @@
       </div>
       <div class="text-center mt-2">
         <div class="param-label" style="color: #6366f1;">SPACE</div>
-        <div class="param-desc mt-1">How it unfolds</div>
       </div>
       <div class="flex gap-3 mt-2" data-modes="space">
-        <div class="mode-dot active" data-mode="0" style="color: #6366f1; background: #6366f1;"></div>
-        <div class="mode-dot" data-mode="1" style="color: #6366f1;"></div>
-        <div class="mode-dot" data-mode="2" style="color: #6366f1;"></div>
-        <div class="mode-dot" data-mode="3" style="color: #6366f1;"></div>
+        <div class="mode-dot active" data-mode="0" data-name="NEAR" style="color: #6366f1; background: #6366f1;"></div>
+        <div class="mode-dot" data-mode="1" data-name="WIDE" style="color: #6366f1;"></div>
+        <div class="mode-dot" data-mode="2" data-name="DEEP" style="color: #6366f1;"></div>
+        <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color: #6366f1;"></div>
       </div>
+      <div class="mode-name" data-mode-display="space" style="color: #6366f1;">NEAR</div>
     </div>
 
   </div>
@@ -296,12 +292,12 @@ const perlinB = new PerlinNoise3D(137);
 const canvas = document.getElementById('fluidCanvas');
 const ctx = canvas.getContext('2d');
 
-// Parameter state - Farbe ist immer voll gesättigt, nur Motion ändert sich
+// Parameter state
 const state = {
-  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0 },      // cyan - linke Zone
-  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1 },    // amber - zweite Zone
-  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2 },      // pink - dritte Zone
-  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3 },      // indigo - rechte Zone
+  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0 },
+  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1 },
+  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2 },
+  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3 },
 };
 
 function resize() {
@@ -352,20 +348,23 @@ document.querySelectorAll('.knob-container').forEach(knob => {
 // Mode dot interaction
 document.querySelectorAll('[data-modes]').forEach(group => {
   const param = group.dataset.modes;
+  const display = document.querySelector(`[data-mode-display="${param}"]`);
+  
   group.querySelectorAll('.mode-dot').forEach(dot => {
     dot.addEventListener('click', () => {
       group.querySelectorAll('.mode-dot').forEach(d => {
         d.classList.remove('active');
-        d.style.background = '#1e2028';
+        d.style.background = '#2a2d36';
       });
       dot.classList.add('active');
       dot.style.background = dot.style.color;
       state[param].mode = +dot.dataset.mode;
+      display.textContent = dot.dataset.name;
     });
   });
 });
 
-// Weiche Überlappungsfunktion für die Zonen
+// Weiche Überlappungsfunktion für die Zonen - jetzt 25% Überlappung
 function zoneWeight(x, zoneCenter, zoneWidth) {
   const dist = Math.abs(x - zoneCenter);
   if (dist > zoneWidth) return 0;
@@ -390,8 +389,8 @@ function render() {
   const imgData = ctx.createImageData(W, H);
   const data = imgData.data;
   
-  // 4 Zonen-Zentren (0.125, 0.375, 0.625, 0.875) mit weicher Überlappung
-  const zoneWidth = 0.35; // Überlappungsbereich
+  // 4 Zonen-Zentren mit 25% Überlappung
+  const zoneWidth = 0.25;
   
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
@@ -402,14 +401,14 @@ function render() {
       
       // Für jeden Parameter seine Zone berechnen
       for (const [key, param] of Object.entries(state)) {
-        const zoneCenter = (param.zone + 0.5) / 4; // 0.125, 0.375, 0.625, 0.875
+        const zoneCenter = (param.zone + 0.5) / 4;
         const weight = zoneWeight(nx, zoneCenter, zoneWidth);
         
         if (weight < 0.01) continue;
         
-        const mix = param.value / 100; // 0 = A, 1 = B
+        const mix = param.value / 100;
         
-        // A: langsam, große Strukturen (niedrige Frequenz, langsame Zeit)
+        // A: langsam, große Strukturen
         const scaleA = 2.0;
         const speedA = 0.15;
         const vA = perlinA.noise(
@@ -418,7 +417,7 @@ function render() {
           t * speedA
         );
         
-        // B: schnell, detaillierte Strukturen (höhere Frequenz, schnellere Zeit)
+        // B: schnell, detaillierte Strukturen
         const scaleB = 5.0 + mix * 3.0;
         const speedB = 0.5 + mix * 0.5;
         const vB = perlinB.noise(
@@ -427,13 +426,13 @@ function render() {
           t * speedB
         );
         
-        // Blend zwischen A und B basierend auf dem Parameter-Wert
+        // Blend zwischen A und B
         const v = vA * (1 - mix) + vB * mix;
         
-        // Intensität ist immer voll, nur die Motion-Charakteristik ändert sich
-        const intensity = (v + 1) / 2; // 0-1
+        // Intensität
+        const intensity = (v + 1) / 2;
         
-        // Farbe mit voller Sättigung hinzufügen, gewichtet nach Zone
+        // Farbe mit voller Sättigung hinzufügen
         r += param.color[0] * intensity * weight;
         g += param.color[1] * intensity * weight;
         b += param.color[2] * intensity * weight;
