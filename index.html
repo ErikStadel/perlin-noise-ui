@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Organic Audio Animator — Mockup v6</title>
+<title>Organic Audio Animator — Mockup v7</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body {
@@ -49,6 +49,41 @@
     box-shadow: 
       0 0 8px currentColor,
       2px 2px 4px rgba(0,0,0,0.4);
+  }
+  
+  /* Focus Switch - 3-way neumorphic */
+  .focus-switch {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: #2a2d36;
+    border-radius: 14px;
+    box-shadow: 
+      inset 3px 3px 6px rgba(0,0,0,0.5),
+      inset -3px -3px 6px rgba(255,255,255,0.04);
+  }
+  .focus-option {
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+    user-select: none;
+  }
+  .focus-option:hover {
+    color: rgba(255,255,255,0.6);
+  }
+  .focus-option.active {
+    background: #2a2d36;
+    color: #e8e8ee;
+    box-shadow: 
+      3px 3px 6px rgba(0,0,0,0.5),
+      -3px -3px 6px rgba(255,255,255,0.04);
+    text-shadow: 0 0 8px rgba(255,255,255,0.3);
   }
   
   /* Knob */
@@ -152,11 +187,27 @@
   <div class="flex items-center justify-between mb-6">
     <div>
       <h1 class="text-lg font-light tracking-[0.3em] text-white/90">ORGANIC AUDIO ANIMATOR</h1>
-      <p class="text-[10px] tracking-[0.2em] text-white/30 mt-1">FLUID · LIVING · BREATHING</p>
+      <p class="text-[10px] tracking-[0.2em] text-white/30 mt-1">ORGANIC MEMORY ENGINE · FLUID · LIVING · BREATHING</p>
     </div>
     <div class="flex items-center gap-3">
       <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
       <span class="text-[10px] tracking-[0.2em] text-white/40">ACTIVE</span>
+    </div>
+  </div>
+
+  <!-- Focus Switch -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-[10px] tracking-[0.25em] text-white/50 font-medium">FOCUS</span>
+        <span class="text-[9px] tracking-[0.1em] text-white/25">Where the engine searches</span>
+      </div>
+      <div class="text-[9px] tracking-[0.15em] text-white/30" data-focus-display>RECENT</div>
+    </div>
+    <div class="focus-switch w-fit" id="focusSwitch">
+      <div class="focus-option active" data-focus="recent">RECENT</div>
+      <div class="focus-option" data-focus="balanced">BALANCED</div>
+      <div class="focus-option" data-focus="ancient">ANCIENT</div>
     </div>
   </div>
 
@@ -347,6 +398,7 @@ const state = {
   texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1, active: true },
   shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2, active: true },
   space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3, active: true },
+  focus: 'recent' // recent, balanced, ancient
 };
 
 // Transition effects
@@ -375,17 +427,12 @@ function getTransitionEffect(time) {
       continue;
     }
     
-    const intensity = Math.sin(t.progress * Math.PI); // Fade in/out
+    const intensity = Math.sin(t.progress * Math.PI);
     
-    if (t.type === 'pulse') {
-      effect.pulse += intensity * 0.5;
-    } else if (t.type === 'wind') {
-      effect.wind += intensity * 0.3;
-    } else if (t.type === 'grain') {
-      effect.grain += intensity * 0.4;
-    } else if (t.type === 'distort') {
-      effect.distortion += intensity * 0.3;
-    }
+    if (t.type === 'pulse') effect.pulse += intensity * 0.5;
+    else if (t.type === 'wind') effect.wind += intensity * 0.3;
+    else if (t.type === 'grain') effect.grain += intensity * 0.4;
+    else if (t.type === 'distort') effect.distortion += intensity * 0.3;
   }
   
   return effect;
@@ -394,30 +441,37 @@ function getTransitionEffect(time) {
 // Mode visual characteristics
 const modeCharacteristics = {
   motion: [
-    { speedMod: 1.0, scaleMod: 1.0, turbulence: 0 },      // FLOW
-    { speedMod: 1.5, scaleMod: 0.8, turbulence: 0.3 },    // PULSE
-    { speedMod: 0.3, scaleMod: 1.2, turbulence: 0.1 },    // DRIFT
-    { speedMod: 2.5, scaleMod: 0.6, turbulence: 0.5 },    // CHAOS
+    { speedMod: 1.0, scaleMod: 1.0, turbulence: 0 },
+    { speedMod: 1.5, scaleMod: 0.8, turbulence: 0.3 },
+    { speedMod: 0.3, scaleMod: 1.2, turbulence: 0.1 },
+    { speedMod: 2.5, scaleMod: 0.6, turbulence: 0.5 },
   ],
   texture: [
-    { brightness: 1.2, contrast: 0.8, grain: 0 },         // BLOOM
-    { brightness: 0.9, contrast: 1.1, grain: 0.1 },       // TAPE
-    { brightness: 1.3, contrast: 1.4, grain: 0.2 },       // CRYSTAL
-    { brightness: 1.0, contrast: 0.9, grain: 0 },         // WATER
-    { brightness: 0.8, contrast: 1.2, grain: 0.3 },       // FABRIC
+    { brightness: 1.2, contrast: 0.8, grain: 0 },
+    { brightness: 0.9, contrast: 1.1, grain: 0.1 },
+    { brightness: 1.3, contrast: 1.4, grain: 0.2 },
+    { brightness: 1.0, contrast: 0.9, grain: 0 },
+    { brightness: 0.8, contrast: 1.2, grain: 0.3 },
   ],
   shape: [
-    { sharpness: 0.5, diffusion: 0 },                     // ORGANIC
-    { sharpness: 1.5, diffusion: 0 },                     // SPECTRAL
-    { sharpness: 0.7, diffusion: 0.4 },                   // DIFFUSE
-    { sharpness: 1.2, diffusion: 0.2 },                   // GRAIN
+    { sharpness: 0.5, diffusion: 0 },
+    { sharpness: 1.5, diffusion: 0 },
+    { sharpness: 0.7, diffusion: 0.4 },
+    { sharpness: 1.2, diffusion: 0.2 },
   ],
   space: [
-    { spread: 0.8, depth: 0.5 },                          // ROOM
-    { spread: 1.2, depth: 0.8 },                          // CLOUD
-    { spread: 1.5, depth: 0.6 },                          // WIDE
-    { spread: 1.0, depth: 1.5 },                          // INFINITE
+    { spread: 0.8, depth: 0.5 },
+    { spread: 1.2, depth: 0.8 },
+    { spread: 1.5, depth: 0.6 },
+    { spread: 1.0, depth: 1.5 },
   ]
+};
+
+// Focus characteristics - affects how the field behaves
+const focusCharacteristics = {
+  recent: { timeScale: 1.0, decay: 0.0, freshness: 1.0 },
+  balanced: { timeScale: 0.7, decay: 0.5, freshness: 0.5 },
+  ancient: { timeScale: 0.4, decay: 1.0, freshness: 0.0 }
 };
 
 function resize() {
@@ -428,6 +482,20 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
+// Focus switch interaction
+document.querySelectorAll('.focus-option').forEach(option => {
+  option.addEventListener('click', () => {
+    document.querySelectorAll('.focus-option').forEach(o => o.classList.remove('active'));
+    option.classList.add('active');
+    state.focus = option.dataset.focus;
+    document.querySelector('[data-focus-display]').textContent = option.dataset.focus.toUpperCase();
+    
+    // Visual feedback for focus change
+    if (state.focus === 'recent') addTransition('wind', 'focus', 0.6);
+    else if (state.focus === 'ancient') addTransition('pulse', 'focus', 1.2);
+  });
+});
+
 // Toggle interaction
 document.querySelectorAll('.toggle-container').forEach(toggle => {
   toggle.addEventListener('click', () => {
@@ -436,11 +504,8 @@ document.querySelectorAll('.toggle-container').forEach(toggle => {
     state[param].active = isActive;
     
     const knob = document.querySelector(`.knob-container[data-param="${param}"]`);
-    if (isActive) {
-      knob.classList.remove('disabled');
-    } else {
-      knob.classList.add('disabled');
-    }
+    if (isActive) knob.classList.remove('disabled');
+    else knob.classList.add('disabled');
   });
 });
 
@@ -498,7 +563,6 @@ document.querySelectorAll('[data-modes]').forEach(group => {
       state[param].mode = +dot.dataset.mode;
       display.textContent = dot.dataset.name;
       
-      // Add transition effect based on mode
       const modeName = dot.dataset.name;
       if (param === 'motion') {
         if (modeName === 'PULSE') addTransition('pulse', param, 1.0);
@@ -515,7 +579,6 @@ document.querySelectorAll('[data-modes]').forEach(group => {
   });
 });
 
-// Weiche Überlappungsfunktion für die Zonen
 function zoneWeight(x, zoneCenter, zoneWidth) {
   const dist = Math.abs(x - zoneCenter);
   if (dist > zoneWidth) return 0;
@@ -528,9 +591,11 @@ function render() {
   const H = canvas.height;
   
   const currentTime = performance.now() / 1000;
-  t += 0.008;
   
-  // Dark background
+  // Focus affects time progression
+  const focusChar = focusCharacteristics[state.focus];
+  t += 0.008 * focusChar.timeScale;
+  
   ctx.fillStyle = '#0a0b0f';
   ctx.fillRect(0, 0, W, H);
   
@@ -541,16 +606,13 @@ function render() {
   const imgData = ctx.createImageData(W, H);
   const data = imgData.data;
   
-  // Get current transition effects
   const transEffect = getTransitionEffect(currentTime);
   
-  // Get mode characteristics
   const motionChar = modeCharacteristics.motion[state.motion.mode];
   const textureChar = modeCharacteristics.texture[state.texture.mode];
   const shapeChar = modeCharacteristics.shape[state.shape.mode];
   const spaceChar = modeCharacteristics.space[state.space.mode];
   
-  // 4 Zonen-Zentren mit 25% Überlappung
   const zoneWidth = 0.25;
   
   for (let y = 0; y < rows; y++) {
@@ -560,7 +622,6 @@ function render() {
       
       let r = 0, g = 0, b = 0;
       
-      // Apply transition distortions
       let distortX = 0, distortY = 0;
       if (transEffect.pulse > 0) {
         const distFromCenter = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.5, 2));
@@ -572,12 +633,19 @@ function render() {
         distortX += Math.sin(ny * 10 + t * 3) * transEffect.wind * 0.03;
       }
       
+      // Focus "decay" effect - ancient memories fade at edges
+      let focusFade = 1.0;
+      if (focusChar.decay > 0) {
+        const distFromCenter = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.5, 2));
+        focusFade = 1.0 - distFromCenter * focusChar.decay * 0.8;
+        focusFade = Math.max(0.3, focusFade);
+      }
+      
       const adjNx = nx + distortX;
       const adjNy = ny + distortY;
       
-      // Für jeden Parameter seine Zone berechnen
       for (const [key, param] of Object.entries(state)) {
-        if (!param.active) continue;
+        if (key === 'focus' || !param.active) continue;
         
         const zoneCenter = (param.zone + 0.5) / 4;
         const weight = zoneWeight(adjNx, zoneCenter, zoneWidth);
@@ -586,7 +654,6 @@ function render() {
         
         const mix = param.value / 100;
         
-        // Get mode-specific characteristics
         let speedMod = 1.0, scaleMod = 1.0, turbulence = 0;
         let brightness = 1.0, contrast = 1.0, grainAmount = 0;
         let sharpness = 1.0, diffusion = 0;
@@ -608,66 +675,52 @@ function render() {
           depth = spaceChar.depth;
         }
         
-        // A: langsam, große Strukturen
         const scaleA = 2.0 * scaleMod * spread;
         const speedA = 0.15 * speedMod;
-        let vA = perlinA.noise(
-          adjNx * scaleA,
-          adjNy * scaleA,
-          t * speedA
-        );
+        let vA = perlinA.noise(adjNx * scaleA, adjNy * scaleA, t * speedA);
         
-        // B: schnell, detaillierte Strukturen
         const scaleB = (5.0 + mix * 3.0) * scaleMod;
         const speedB = (0.5 + mix * 0.5) * speedMod;
-        let vB = perlinB.noise(
-          adjNx * scaleB,
-          adjNy * scaleB,
-          t * speedB
-        );
+        let vB = perlinB.noise(adjNx * scaleB, adjNy * scaleB, t * speedB);
         
-        // Add turbulence
         if (turbulence > 0) {
           const turb = perlinA.noise(adjNx * 8, adjNy * 8, t * 2) * turbulence;
           vA += turb;
           vB += turb;
         }
         
-        // Blend zwischen A und B
         let v = vA * (1 - mix) + vB * mix;
         
-        // Apply sharpness
+        // Ancient focus: add "ghost" layer - older memory echoes
+        if (focusChar.decay > 0.3) {
+          const ghost = perlinA.noise(adjNx * 1.5, adjNy * 1.5, t * 0.05) * focusChar.decay * 0.3;
+          v += ghost;
+        }
+        
         v = Math.sign(v) * Math.pow(Math.abs(v), 1 / sharpness);
         
-        // Apply diffusion
         if (diffusion > 0) {
           const blur = perlinB.noise(adjNx * 3, adjNy * 3, t * 0.5) * diffusion;
           v = v * (1 - diffusion) + blur;
         }
         
-        // Intensität
         let intensity = (v + 1) / 2;
-        
-        // Apply brightness and contrast
         intensity = ((intensity - 0.5) * contrast + 0.5) * brightness;
         intensity = Math.max(0, Math.min(1, intensity));
         
-        // Add grain
         if (grainAmount > 0 || transEffect.grain > 0) {
           const grain = perlinB.noise(adjNx * 20, adjNy * 20, t * 5) * (grainAmount + transEffect.grain);
           intensity += grain * 0.2;
         }
         
-        // Apply depth for space
         intensity *= (0.7 + depth * 0.3);
+        intensity *= focusFade;
         
-        // Farbe mit voller Sättigung hinzufügen
         r += param.color[0] * intensity * weight;
         g += param.color[1] * intensity * weight;
         b += param.color[2] * intensity * weight;
       }
       
-      // Fill pixels
       for (let dy = 0; dy < step && y * step + dy < H; dy++) {
         for (let dx = 0; dx < step && x * step + dx < W; dx++) {
           const idx = ((y * step + dy) * W + (x * step + dx)) * 4;
@@ -682,7 +735,6 @@ function render() {
   
   ctx.putImageData(imgData, 0, 0);
   
-  // Vignette
   const grad = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.6);
   grad.addColorStop(0, 'rgba(0,0,0,0)');
   grad.addColorStop(1, 'rgba(0,0,0,0.5)');
