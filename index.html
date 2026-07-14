@@ -18,62 +18,35 @@
       background: #2a2d36;
       border: 1px solid #3a3d48;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      position: relative; /* Für das absolute Overlay */
-    }
-
-    .plugin-title {
-      font-family: "Cinzel", serif;
-    }
-
-    .plugin-header {
-      padding: 20px 32px 16px;
-      text-align: center;
       position: relative;
     }
+
+    .plugin-title { font-family: "Cinzel", serif; }
+    .plugin-header { padding: 20px 32px 16px; text-align: center; position: relative; }
 
     .plugin-title-aura {
-      position: relative;
-      display: inline-block;
-      padding: 2px 0;
+      position: relative; display: inline-block; padding: 2px 0;
     }
-
     .plugin-title-aura::before {
-      content: "";
-      position: absolute;
-      inset: -20px -60px -28px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.55), transparent 60%),
-        radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.35), transparent 65%);
-      filter: blur(26px);
-      opacity: 0.75;
-      z-index: -1;
-      pointer-events: none;
+      content: ""; position: absolute; inset: -20px -60px -28px;
+      background: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.55), transparent 60%),
+                  radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.35), transparent 65%);
+      filter: blur(26px); opacity: 0.75; z-index: -1; pointer-events: none;
       animation: aether-fog 12s ease-in-out infinite;
     }
-
     @keyframes aether-fog {
       0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.65; }
       50% { transform: translate3d(3px, -4px, 0) scale(1.05); opacity: 0.8; }
       100% { transform: translate3d(-2px, 3px, 0) scale(1); opacity: 0.65; }
     }
-
     .plugin-title {
-      margin: 0;
-      font-family: "Cinzel", serif;
-      font-size: 20px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #f9fafb;
+      margin: 0; font-family: "Cinzel", serif; font-size: 20px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: #f9fafb;
       text-shadow: 0 0 12px rgba(167, 139, 250, 0.9), 0 0 32px rgba(56, 189, 248, 0.4), 0 0 60px rgba(15, 23, 42, 0.8);
     }
-
     .plugin-subtitle {
-      margin: 4px 0 0;
-      font-family: "Inter", system-ui, sans-serif;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(232, 232, 238, 0.6);
+      margin: 4px 0 0; font-family: "Inter", system-ui, sans-serif; font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232, 232, 238, 0.6);
       text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
     }
 
@@ -176,138 +149,79 @@
 
     /* --- PRESET OVERLAY STYLES --- */
     .preset-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(10, 11, 15, 0.92);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
+      position: absolute; inset: 0; background: rgba(10, 11, 15, 0.94);
+      backdrop-filter: blur(12px); z-index: 100; border-radius: 24px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
     }
-    .preset-overlay.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .preset-overlay.visible { opacity: 1; pointer-events: all; }
+    
     .preset-header {
-      padding: 24px 32px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 24px 32px 16px; border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; justify-content: space-between; align-items: center;
     }
     .preset-title {
-      font-family: "Cinzel", serif;
-      font-size: 14px;
-      letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.8);
+      font-family: "Cinzel", serif; font-size: 14px; letter-spacing: 0.25em; color: rgba(255,255,255,0.8);
     }
     .preset-close {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: #2a2d36;
+      width: 32px; height: 32px; border-radius: 50%; background: #2a2d36;
       box-shadow: 3px 3px 6px rgba(0,0,0,0.5), -3px -3px 6px rgba(255,255,255,0.04);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: rgba(255,255,255,0.5);
-      transition: all 0.2s;
+      cursor: pointer; color: rgba(255,255,255,0.5); transition: all 0.2s;
     }
     .preset-close:hover { color: #fff; box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5), inset -2px -2px 4px rgba(255,255,255,0.04); }
     
     .preset-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.5fr;
-      gap: 0;
-      flex: 1;
-      overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 0; flex: 1; overflow: hidden;
     }
     .preset-col {
-      padding: 24px;
-      border-right: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      padding: 24px; border-right: 1px solid rgba(255,255,255,0.05);
+      display: flex; flex-direction: column; gap: 8px;
     }
     .preset-col:last-child { border-right: none; }
     
     .col-header {
-      font-family: "Cinzel", serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 8px;
-      text-transform: uppercase;
+      font-family: "Cinzel", serif; font-size: 10px; letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.4); margin-bottom: 12px; text-transform: uppercase;
     }
     
     .category-item {
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
+      padding: 10px 14px; border-radius: 8px; font-size: 11px; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s;
+      border: 1px solid transparent; display: flex; justify-content: space-between; align-items: center;
     }
-    .category-item:hover {
-      background: rgba(255,255,255,0.03);
-      color: rgba(255,255,255,0.8);
-    }
-    .category-item.active {
-      background: rgba(167, 139, 250, 0.1);
-      border-color: rgba(167, 139, 250, 0.3);
-      color: #c4b5fd;
-      box-shadow: 0 0 12px rgba(167, 139, 250, 0.1);
-    }
+    .category-item:hover { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.8); }
     
-    .preset-list {
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 8px;
+    /* Active State for Categories */
+    .category-item.active {
+      background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.3);
+      color: #c4b5fd; box-shadow: 0 0 12px rgba(167, 139, 250, 0.1);
     }
-    /* Custom Scrollbar */
+    /* Special styling for USER category when active */
+    .category-item.active[data-val="user"] {
+      background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3);
+      color: #7dd3fc; box-shadow: 0 0 12px rgba(56, 189, 248, 0.1);
+    }
+
+    .preset-list { flex: 1; overflow-y: auto; padding-right: 8px; }
     .preset-list::-webkit-scrollbar { width: 4px; }
     .preset-list::-webkit-scrollbar-track { background: transparent; }
     .preset-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
     .preset-list::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
     .preset-item {
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.6);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 12px 16px; border-radius: 8px; font-size: 12px; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .preset-item:hover {
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-    }
+    .preset-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
     .preset-item.active-preset {
-      background: rgba(56, 189, 248, 0.1);
-      border-left: 2px solid #38bdf8;
-      color: #7dd3fc;
+      background: rgba(56, 189, 248, 0.1); border-left: 2px solid #38bdf8; color: #7dd3fc;
     }
-    .preset-meta {
-      font-size: 9px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.05em;
-    }
+    .preset-meta { font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
 
-    .footer-preset-trigger {
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .footer-preset-trigger:hover {
-      color: rgba(255,255,255,0.5);
-      text-shadow: 0 0 8px rgba(255,255,255,0.2);
-    }
+    .footer-preset-trigger { cursor: pointer; transition: all 0.2s; }
+    .footer-preset-trigger:hover { color: rgba(255,255,255,0.5); text-shadow: 0 0 8px rgba(255,255,255,0.2); }
   </style>
 </head>
 
@@ -342,7 +256,7 @@
         <div class="memory-meta">
           <span class="memory-meta-label">MEMORY</span>
           <span class="memory-meta-value" data-memory-display>50%</span>
-          <span class="memory-meta-hint">drag to adjust</span>
+          <span class="memory-meta-hint">drag to adjust</div>
         </div>
         <div class="memory-orb-zone" id="memoryOrb" data-value="50">
           <div class="memory-orb-shell">
@@ -453,19 +367,23 @@
       </div>
       
       <div class="preset-grid">
-        <!-- Column 1: Length -->
+        <!-- Column 1: Source / Length -->
         <div class="preset-col">
-          <div class="col-header">Signal Length</div>
-          <div class="category-item active" data-cat="length" data-val="particles">PARTICLES</div>
-          <div class="category-item" data-cat="length" data-val="waves">WAVES</div>
-          <div class="category-item" data-cat="length" data-val="fields">FIELDS</div>
+          <div class="col-header">Source & Length</div>
+          <div class="category-item" data-cat="source" data-val="user">
+            <span>USER PRESETS</span>
+            <span style="font-size:9px; opacity:0.5">★</span>
+          </div>
+          <div class="category-item" data-cat="source" data-val="particles">PARTICLES</div>
+          <div class="category-item" data-cat="source" data-val="waves">WAVES</div>
+          <div class="category-item" data-cat="source" data-val="fields">FIELDS</div>
         </div>
         
         <!-- Column 2: Memory Focus -->
         <div class="preset-col">
           <div class="col-header">Memory Focus</div>
           <div class="category-item" data-cat="memory" data-val="fresh">FRESH ECHOES</div>
-          <div class="category-item active" data-cat="memory" data-val="living">LIVING WEAVE</div>
+          <div class="category-item" data-cat="memory" data-val="living">LIVING WEAVE</div>
           <div class="category-item" data-cat="memory" data-val="ancient">ANCIENT TRACES</div>
         </div>
         
@@ -484,21 +402,26 @@
   <script>
     // --- PRESET DATA ---
     const presets = [
-      { name: "Ink in Water", length: "waves", memory: "living", author: "Aether" },
-      { name: "Static Bloom", length: "particles", memory: "fresh", author: "Aether" },
-      { name: "Cathedral Ghosts", length: "fields", memory: "ancient", author: "Aether" },
-      { name: "Glitch Fabric", length: "particles", memory: "living", author: "Aether" },
-      { name: "Ocean Floor", length: "waves", memory: "ancient", author: "Aether" },
-      { name: "Nebula Drift", length: "fields", memory: "living", author: "Aether" },
-      { name: "Tape Decay", length: "waves", memory: "fresh", author: "Aether" },
-      { name: "Deep Time", length: "fields", memory: "ancient", author: "Aether" },
-      { name: "Crystal Dust", length: "particles", memory: "fresh", author: "Aether" },
-      { name: "Submerged Bell", length: "waves", memory: "living", author: "Aether" },
-      { name: "Forgotten Choir", length: "fields", memory: "ancient", author: "Aether" },
-      { name: "Velvet Grain", length: "particles", memory: "living", author: "Aether" }
+      { name: "Ink in Water", source: "waves", memory: "living", author: "Aether" },
+      { name: "Static Bloom", source: "particles", memory: "fresh", author: "Aether" },
+      { name: "Cathedral Ghosts", source: "fields", memory: "ancient", author: "Aether" },
+      { name: "Glitch Fabric", source: "particles", memory: "living", author: "Aether" },
+      { name: "Ocean Floor", source: "waves", memory: "ancient", author: "Aether" },
+      { name: "Nebula Drift", source: "fields", memory: "living", author: "Aether" },
+      { name: "Tape Decay", source: "waves", memory: "fresh", author: "Aether" },
+      { name: "Deep Time", source: "fields", memory: "ancient", author: "Aether" },
+      { name: "Crystal Dust", source: "particles", memory: "fresh", author: "Aether" },
+      { name: "Submerged Bell", source: "waves", memory: "living", author: "Aether" },
+      { name: "Forgotten Choir", source: "fields", memory: "ancient", author: "Aether" },
+      { name: "Velvet Grain", source: "particles", memory: "living", author: "Aether" },
+      // User Presets
+      { name: "My Custom Pad", source: "user", memory: "living", author: "User" },
+      { name: "Vocal Chop Experiment", source: "user", memory: "fresh", author: "User" },
+      { name: "Ambient Drone 04", source: "user", memory: "ancient", author: "User" }
     ];
 
-    let currentFilter = { length: "particles", memory: "living" };
+    // Filter state: Arrays allow multiple selections or empty (show all)
+    let currentFilter = { source: [], memory: [] };
     let currentPreset = "Ink in Water";
 
     // --- OVERLAY LOGIC ---
@@ -519,23 +442,26 @@
     openBtn.addEventListener('click', openOverlay);
     closeBtn.addEventListener('click', closeOverlay);
     
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && overlay.classList.contains('visible')) closeOverlay();
     });
 
-    // Category Selection
+    // Toggle Category Logic
     document.querySelectorAll('.category-item').forEach(item => {
       item.addEventListener('click', () => {
         const cat = item.dataset.cat;
         const val = item.dataset.val;
         
-        // Update active state in this column
-        item.parentElement.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+        // Toggle in array
+        const index = currentFilter[cat].indexOf(val);
+        if (index > -1) {
+          currentFilter[cat].splice(index, 1); // Remove (deselect)
+          item.classList.remove('active');
+        } else {
+          currentFilter[cat].push(val); // Add (select)
+          item.classList.add('active');
+        }
         
-        // Update filter and re-render
-        currentFilter[cat] = val;
         renderPresets();
       });
     });
@@ -543,7 +469,12 @@
     function renderPresets() {
       presetListEl.innerHTML = '';
       
-      const filtered = presets.filter(p => p.length === currentFilter.length && p.memory === currentFilter.memory);
+      // Filter logic: If array is empty, match ALL. Otherwise, match if included.
+      const filtered = presets.filter(p => {
+        const matchSource = currentFilter.source.length === 0 || currentFilter.source.includes(p.source);
+        const matchMemory = currentFilter.memory.length === 0 || currentFilter.memory.includes(p.memory);
+        return matchSource && matchMemory;
+      });
       
       if (filtered.length === 0) {
         presetListEl.innerHTML = '<div class="preset-item" style="justify-content:center; color:rgba(255,255,255,0.3)">No weaves found in this intersection.</div>';
@@ -553,21 +484,24 @@
       filtered.forEach(p => {
         const div = document.createElement('div');
         div.className = `preset-item ${p.name === currentPreset ? 'active-preset' : ''}`;
+        
+        // Special styling for user presets in the list
+        const authorDisplay = p.source === 'user' ? '<span style="color:#7dd3fc">User</span>' : p.author;
+        
         div.innerHTML = `
           <span>${p.name}</span>
-          <span class="preset-meta">${p.author}</span>
+          <span class="preset-meta">${authorDisplay}</span>
         `;
         div.addEventListener('click', () => {
           currentPreset = p.name;
           openBtn.textContent = `PRESET: ${p.name.toUpperCase()} ▾`;
           closeOverlay();
-          // Optional: Trigger a visual "load" effect here
         });
         presetListEl.appendChild(div);
       });
     }
 
-    // --- EXISTING AETHERLOOM LOGIC ---
+    // --- EXISTING AETHERLOOM LOGIC (Unchanged) ---
     class PerlinNoise3D {
       constructor(seed = 0) { this.perm = new Uint8Array(512); const p = new Uint8Array(256); for (let i = 0; i < 256; i++)p[i] = i; let n = seed || Math.random() * 65536; for (let i = 255; i > 0; i--) { n = (n * 16807) % 2147483647; const j = n % (i + 1);[p[i], p[j]] = [p[j], p[i]] } for (let i = 0; i < 512; i++)this.perm[i] = p[i & 255] }
       fade(t) { return t * t * t * (t * (t * 6 - 15) + 10) }
@@ -601,7 +535,6 @@
     function resize() { const r = canvas.getBoundingClientRect(); canvas.width = r.width * devicePixelRatio; canvas.height = r.height * devicePixelRatio }
     window.addEventListener('resize', resize); resize();
 
-    // Memory Orb
     const memoryOrb = document.getElementById('memoryOrb'), memoryCore = document.getElementById('memoryCore'), memoryDisplay = document.querySelector('[data-memory-display]');
     let memDrag = false, memStartY = 0, memStartVal = 0;
     function updateMem() {
@@ -618,7 +551,6 @@
     window.addEventListener('mousemove', e => { if (!memDrag) return; state.memory = Math.max(0, Math.min(100, memStartVal + (memStartY - e.clientY) * .5)); updateMem() });
     window.addEventListener('mouseup', () => { memDrag = false });
 
-    // Focus
     document.querySelectorAll('.focus-option').forEach(o => {
       o.addEventListener('click', () => {
         document.querySelectorAll('.focus-option').forEach(x => x.classList.remove('active'));
@@ -627,7 +559,6 @@
       })
     });
 
-    // Toggles
     document.querySelectorAll('.toggle-container').forEach(t => {
       t.addEventListener('click', () => {
         const p = t.dataset.toggle, a = t.classList.toggle('active'); state[p].active = a;
@@ -635,7 +566,6 @@
       })
     });
 
-    // Knobs
     document.querySelectorAll('.knob-container').forEach(knob => {
       let drag = false, sy = 0, sv = 0; const p = knob.dataset.param;
       const upd = () => { state[p].value = +knob.dataset.value; knob.querySelector('.knob-indicator').style.transform = `rotate(${-135 + (state[p].value / 100) * 270}deg)` };
@@ -645,7 +575,6 @@
       window.addEventListener('mouseup', () => { drag = false });
     });
 
-    // Modes
     document.querySelectorAll('[data-modes]').forEach(g => {
       const p = g.dataset.modes, disp = document.querySelector(`[data-mode-display="${p}"]`);
       g.querySelectorAll('.mode-dot').forEach(d => {
