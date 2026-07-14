@@ -16,899 +16,478 @@
     border: 1px solid #3a3d48;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  
-  /* Engine Controls Section */
-  .engine-section {
-    background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, rgba(255,255,255,0) 100%);
-    border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 14px;
-    padding: 14px 20px;
-  }
-  .engine-label {
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    color: rgba(255,255,255,0.35);
-    font-weight: 500;
-  }
-  
+
   /* Toggle Switch */
   .toggle-container {
-    width: 48px;
-    height: 24px;
-    border-radius: 12px;
+    width: 44px;
+    height: 22px;
+    border-radius: 11px;
     background: #2a2d36;
-    box-shadow: 
-      inset 3px 3px 6px rgba(0,0,0,0.5),
-      inset -3px -3px 6px rgba(255,255,255,0.04);
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.5), inset -3px -3px 6px rgba(255,255,255,0.04);
     position: relative;
     cursor: pointer;
     transition: all 0.3s;
+    flex-shrink: 0;
   }
   .toggle-knob {
     position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 18px;
-    height: 18px;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
     border-radius: 50%;
     background: #3a3d48;
-    box-shadow: 
-      2px 2px 4px rgba(0,0,0,0.4),
-      -1px -1px 3px rgba(255,255,255,0.03);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4), -1px -1px 3px rgba(255,255,255,0.03);
     transition: all 0.3s;
   }
   .toggle-container.active .toggle-knob {
-    left: 27px;
+    left: 25px;
     background: currentColor;
-    box-shadow: 
-      0 0 8px currentColor,
-      2px 2px 4px rgba(0,0,0,0.4);
+    box-shadow: 0 0 8px currentColor, 2px 2px 4px rgba(0,0,0,0.4);
   }
-  
+
   /* Focus Switch */
   .focus-switch {
     display: flex;
-    gap: 4px;
-    padding: 4px;
+    gap: 3px;
+    padding: 3px;
     background: #2a2d36;
-    border-radius: 14px;
-    box-shadow: 
-      inset 3px 3px 6px rgba(0,0,0,0.5),
-      inset -3px -3px 6px rgba(255,255,255,0.04);
+    border-radius: 12px;
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.5), inset -3px -3px 6px rgba(255,255,255,0.04);
   }
   .focus-option {
-    padding: 7px 16px;
-    border-radius: 10px;
+    padding: 6px 14px;
+    border-radius: 9px;
     font-size: 9px;
     letter-spacing: 0.2em;
     font-weight: 500;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.35);
     cursor: pointer;
     transition: all 0.3s;
     background: transparent;
     user-select: none;
   }
-  .focus-option:hover {
-    color: rgba(255,255,255,0.6);
-  }
+  .focus-option:hover { color: rgba(255,255,255,0.55); }
   .focus-option.active {
     background: #2a2d36;
     color: #e8e8ee;
-    box-shadow: 
-      3px 3px 6px rgba(0,0,0,0.5),
-      -3px -3px 6px rgba(255,255,255,0.04);
-    text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.5), -3px -3px 6px rgba(255,255,255,0.04);
+    text-shadow: 0 0 8px rgba(255,255,255,0.2);
   }
-  
-  /* Memory Orb - kompakter */
-  .memory-container {
+
+  /* Memory Orb — compact */
+  .memory-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .memory-orb-zone {
     position: relative;
-    width: 76px;
-    height: 76px;
+    width: 72px; height: 72px;
     cursor: grab;
+    flex-shrink: 0;
+  }
+  .memory-orb-zone:active { cursor: grabbing; }
+  .memory-orb-shell {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.07), transparent 70%);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(139,92,246,0.15);
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .memory-container:active { cursor: grabbing; }
-  .memory-orb {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent);
-    box-shadow: 
-      inset 0 0 30px rgba(0,0,0,0.6),
-      0 0 30px rgba(139, 92, 246, 0.25);
-    transition: all 0.3s;
-  }
   .memory-core {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed);
-    box-shadow: 
-      0 0 15px rgba(167, 139, 250, 0.6),
-      0 0 30px rgba(124, 58, 237, 0.4);
-    transition: all 0.3s;
+    background: radial-gradient(circle at 35% 35%, #c4b5fd, #7c3aed);
+    transition: width 0.15s, height 0.15s, box-shadow 0.15s;
+    position: relative;
+    z-index: 2;
   }
   .memory-ring {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
     border-radius: 50%;
-    border: 1.5px solid rgba(167, 139, 250, 0.35);
+    border: 1.5px solid rgba(167,139,250,0.35);
     opacity: 0;
-    animation: pulse-ring 3s ease-out infinite;
+    pointer-events: none;
+    animation: ring-pulse 3s ease-out infinite;
   }
-  @keyframes pulse-ring {
-    0% {
-      width: 20px;
-      height: 20px;
-      opacity: 0.7;
-    }
-    100% {
-      width: 76px;
-      height: 76px;
-      opacity: 0;
-    }
+  @keyframes ring-pulse {
+    0%   { width: 16px; height: 16px; opacity: 0.7; }
+    100% { width: 72px; height: 72px; opacity: 0; }
   }
-  
+  .memory-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .memory-meta-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: #a78bfa;
+  }
+  .memory-meta-value {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .memory-meta-hint {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+  }
+
   /* Knob */
   .knob-container {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 100px; height: 100px;
     cursor: grab;
     transition: opacity 0.3s;
   }
   .knob-container:active { cursor: grabbing; }
-  .knob-container.disabled {
-    opacity: 0.3;
-    pointer-events: none;
-  }
+  .knob-container.disabled { opacity: 0.3; pointer-events: none; }
   .knob-body {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     border-radius: 50%;
     background: #2a2d36;
-    box-shadow: 
-      10px 10px 20px rgba(0,0,0,0.55),
-      -10px -10px 20px rgba(255,255,255,0.06);
+    box-shadow: 8px 8px 16px rgba(0,0,0,0.55), -8px -8px 16px rgba(255,255,255,0.06);
     position: relative;
   }
   .knob-inner {
     position: absolute;
-    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #2e313a 0%, #24272f 100%);
-    box-shadow: 
-      inset 4px 4px 8px rgba(0,0,0,0.35),
-      inset -2px -2px 6px rgba(255,255,255,0.04);
+    background: linear-gradient(145deg, #2e313a, #24272f);
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.35), inset -2px -2px 5px rgba(255,255,255,0.04);
   }
   .knob-indicator {
     position: absolute;
-    top: 6px;
-    left: 50%;
-    width: 3px;
-    height: 18px;
+    top: 5px; left: 50%;
+    width: 3px; height: 16px;
     margin-left: -1.5px;
     border-radius: 2px;
-    transform-origin: 50% 49px;
+    transform-origin: 50% 45px;
   }
   .knob-ring {
     position: absolute;
-    top: -8px; left: -8px; right: -8px; bottom: -8px;
+    top: -6px; left: -6px; right: -6px; bottom: -6px;
     border-radius: 50%;
     border: 2px solid transparent;
-    opacity: 0.4;
+    opacity: 0.35;
   }
-  
+
   /* Mode dots */
   .mode-dot {
-    width: 10px;
-    height: 10px;
+    width: 9px; height: 9px;
     border-radius: 50%;
     background: #2a2d36;
-    box-shadow: 
-      2px 2px 4px rgba(0,0,0,0.45),
-      -2px -2px 4px rgba(255,255,255,0.04);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.45), -2px -2px 4px rgba(255,255,255,0.04);
     cursor: pointer;
     transition: all 0.2s;
   }
   .mode-dot.active {
-    box-shadow: 
-      0 0 8px currentColor,
-      0 0 12px currentColor;
+    box-shadow: 0 0 6px currentColor, 0 0 10px currentColor;
   }
-  
+
   /* Viz */
   .viz-frame {
     background: #0a0b0f;
     border: 1px solid #3a3d48;
-    box-shadow: 
-      inset 0 0 60px rgba(0,0,0,0.8),
-      0 0 40px rgba(0,0,0,0.3);
-    border-radius: 16px;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.3);
+    border-radius: 14px;
   }
-  
+
   canvas { display: block; }
-  
-  .param-label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    font-weight: 500;
-  }
-  .mode-name {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.4);
-    min-height: 12px;
-  }
-  .control-label {
-    font-size: 9px;
-    letter-spacing: 0.25em;
-    color: rgba(255,255,255,0.4);
-    font-weight: 500;
-  }
-  .memory-value-inline {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    color: rgba(167, 139, 250, 0.7);
-    font-weight: 500;
-  }
+  .param-label { font-size: 10px; letter-spacing: 0.2em; font-weight: 500; }
+  .mode-name { font-size: 8px; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); min-height: 11px; }
 </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<div class="plugin-frame rounded-3xl p-8 w-full max-w-5xl">
-  
+<div class="plugin-frame rounded-3xl p-7 w-full max-w-5xl">
+
   <!-- Header -->
   <div class="flex items-center justify-between mb-5">
     <div>
-      <h1 class="text-lg font-light tracking-[0.3em] text-white/90">ORGANIC AUDIO ANIMATOR</h1>
-      <p class="text-[10px] tracking-[0.2em] text-white/30 mt-1">ORGANIC MEMORY ENGINE · FLUID · LIVING · BREATHING</p>
+      <h1 class="text-base font-light tracking-[0.3em] text-white/90">ORGANIC AUDIO ANIMATOR</h1>
+      <p class="text-[9px] tracking-[0.2em] text-white/25 mt-1">ORGANIC MEMORY ENGINE</p>
     </div>
     <div class="flex items-center gap-3">
       <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-      <span class="text-[10px] tracking-[0.2em] text-white/40">ACTIVE</span>
+      <span class="text-[9px] tracking-[0.2em] text-white/35">ACTIVE</span>
     </div>
   </div>
 
-  <!-- Engine Controls Bar (Focus + Memory) -->
-  <div class="engine-section mb-5">
-    <div class="flex items-center justify-between">
-      
-      <!-- Left: Focus -->
-      <div class="flex items-center gap-5">
-        <div class="flex items-center gap-3">
-          <span class="control-label">FOCUS</span>
-        </div>
-        <div class="focus-switch" id="focusSwitch">
-          <div class="focus-option active" data-focus="recent">RECENT</div>
-          <div class="focus-option" data-focus="balanced">BALANCED</div>
-          <div class="focus-option" data-focus="ancient">ANCIENT</div>
+  <!-- Global Controls: Focus (left) + Memory Orb (right) -->
+  <div class="flex items-center justify-between mb-5">
+    <!-- Focus -->
+    <div class="flex items-center gap-4">
+      <span class="text-[9px] tracking-[0.25em] text-white/40 font-medium">FOCUS</span>
+      <div class="focus-switch" id="focusSwitch">
+        <div class="focus-option active" data-focus="recent">RECENT</div>
+        <div class="focus-option" data-focus="balanced">BALANCED</div>
+        <div class="focus-option" data-focus="ancient">ANCIENT</div>
+      </div>
+    </div>
+
+    <!-- Memory Orb -->
+    <div class="memory-wrap">
+      <div class="memory-meta">
+        <span class="memory-meta-label">MEMORY</span>
+        <span class="memory-meta-value" data-memory-display>50%</span>
+        <span class="memory-meta-hint">drag orb to adjust</span>
+      </div>
+      <div class="memory-orb-zone" id="memoryOrb" data-value="50">
+        <div class="memory-orb-shell">
+          <div class="memory-core" id="memoryCore"></div>
+          <div class="memory-ring" style="animation-delay:0s"></div>
+          <div class="memory-ring" style="animation-delay:1s"></div>
+          <div class="memory-ring" style="animation-delay:2s"></div>
         </div>
       </div>
-      
-      <!-- Center: Engine name accent -->
-      <div class="text-center">
-        <span class="engine-label">ORGANIC MEMORY ENGINE</span>
-      </div>
-      
-      <!-- Right: Memory Orb -->
-      <div class="flex items-center gap-4">
-        <div class="flex flex-col items-end gap-1">
-          <span class="control-label">MEMORY</span>
-          <span class="memory-value-inline" data-memory-display>50%</span>
-        </div>
-        <div class="memory-container" id="memoryOrb" data-value="50">
-          <div class="memory-orb">
-            <div class="memory-core" id="memoryCore"></div>
-            <div class="memory-ring" style="animation-delay: 0s;"></div>
-            <div class="memory-ring" style="animation-delay: 1s;"></div>
-            <div class="memory-ring" style="animation-delay: 2s;"></div>
-          </div>
-        </div>
-      </div>
-      
     </div>
   </div>
 
-  <!-- Visualization -->
-  <div class="viz-frame overflow-hidden relative mb-8" style="aspect-ratio: 21/9;">
+  <!-- Perlin Field — full width -->
+  <div class="viz-frame overflow-hidden relative mb-7" style="aspect-ratio:21/8;">
     <canvas id="fluidCanvas" class="w-full h-full"></canvas>
-    <div class="absolute top-4 left-4 text-[9px] tracking-[0.2em] text-white/25">PERLIN FIELD</div>
-    <div class="absolute bottom-4 right-4 flex gap-4 text-[9px] tracking-[0.15em]">
-      <span class="text-white/20">A · SLOW / LARGE</span>
-      <span class="text-white/20">B · FAST / DETAIL</span>
+    <div class="absolute top-3 left-4 text-[8px] tracking-[0.2em] text-white/20">PERLIN FIELD</div>
+    <div class="absolute bottom-3 right-4 flex gap-4 text-[8px] tracking-[0.15em]">
+      <span class="text-white/15">A · SLOW / LARGE</span>
+      <span class="text-white/15">B · FAST / DETAIL</span>
     </div>
   </div>
 
-  <!-- Parameters -->
-  <div class="grid grid-cols-4 gap-6">
-    
+  <!-- Parameters — full width 4-col grid -->
+  <div class="grid grid-cols-4 gap-5">
+
     <!-- MOTION -->
-    <div class="flex flex-col items-center gap-3">
-      <div class="toggle-container active" data-toggle="motion" style="color: #06b6d4;">
-        <div class="toggle-knob"></div>
-      </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="toggle-container active" data-toggle="motion" style="color:#06b6d4"><div class="toggle-knob"></div></div>
       <div class="knob-container" data-param="motion" data-value="35">
-        <div class="knob-ring" style="border-color: #06b6d4;"></div>
-        <div class="knob-body">
-          <div class="knob-inner"></div>
-          <div class="knob-indicator" style="background: #06b6d4; box-shadow: 0 0 6px #06b6d4;"></div>
+        <div class="knob-ring" style="border-color:#06b6d4"></div>
+        <div class="knob-body"><div class="knob-inner"></div>
+          <div class="knob-indicator" style="background:#06b6d4;box-shadow:0 0 6px #06b6d4"></div>
         </div>
       </div>
-      <div class="text-center mt-2">
-        <div class="param-label" style="color: #06b6d4;">MOTION</div>
+      <div class="param-label" style="color:#06b6d4">MOTION</div>
+      <div class="flex gap-2 mt-1" data-modes="motion">
+        <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color:#06b6d4;background:#06b6d4"></div>
+        <div class="mode-dot" data-mode="1" data-name="PULSE" style="color:#06b6d4"></div>
+        <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color:#06b6d4"></div>
+        <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color:#06b6d4"></div>
       </div>
-      <div class="flex gap-3 mt-2" data-modes="motion">
-        <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color: #06b6d4; background: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="1" data-name="PULSE" style="color: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color: #06b6d4;"></div>
-        <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color: #06b6d4;"></div>
-      </div>
-      <div class="mode-name" data-mode-display="motion" style="color: #06b6d4;">FLOW</div>
+      <div class="mode-name" data-mode-display="motion" style="color:#06b6d4">FLOW</div>
     </div>
 
     <!-- TEXTURE -->
-    <div class="flex flex-col items-center gap-3">
-      <div class="toggle-container active" data-toggle="texture" style="color: #f59e0b;">
-        <div class="toggle-knob"></div>
-      </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="toggle-container active" data-toggle="texture" style="color:#f59e0b"><div class="toggle-knob"></div></div>
       <div class="knob-container" data-param="texture" data-value="60">
-        <div class="knob-ring" style="border-color: #f59e0b;"></div>
-        <div class="knob-body">
-          <div class="knob-inner"></div>
-          <div class="knob-indicator" style="background: #f59e0b; box-shadow: 0 0 6px #f59e0b;"></div>
+        <div class="knob-ring" style="border-color:#f59e0b"></div>
+        <div class="knob-body"><div class="knob-inner"></div>
+          <div class="knob-indicator" style="background:#f59e0b;box-shadow:0 0 6px #f59e0b"></div>
         </div>
       </div>
-      <div class="text-center mt-2">
-        <div class="param-label" style="color: #f59e0b;">TEXTURE</div>
+      <div class="param-label" style="color:#f59e0b">TEXTURE</div>
+      <div class="flex gap-2 mt-1" data-modes="texture">
+        <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color:#f59e0b;background:#f59e0b"></div>
+        <div class="mode-dot" data-mode="1" data-name="TAPE" style="color:#f59e0b"></div>
+        <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color:#f59e0b"></div>
+        <div class="mode-dot" data-mode="3" data-name="WATER" style="color:#f59e0b"></div>
+        <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color:#f59e0b"></div>
       </div>
-      <div class="flex gap-2 mt-2" data-modes="texture">
-        <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color: #f59e0b; background: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="1" data-name="TAPE" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="3" data-name="WATER" style="color: #f59e0b;"></div>
-        <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color: #f59e0b;"></div>
-      </div>
-      <div class="mode-name" data-mode-display="texture" style="color: #f59e0b;">BLOOM</div>
+      <div class="mode-name" data-mode-display="texture" style="color:#f59e0b">BLOOM</div>
     </div>
 
     <!-- SHAPE -->
-    <div class="flex flex-col items-center gap-3">
-      <div class="toggle-container active" data-toggle="shape" style="color: #ec4899;">
-        <div class="toggle-knob"></div>
-      </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="toggle-container active" data-toggle="shape" style="color:#ec4899"><div class="toggle-knob"></div></div>
       <div class="knob-container" data-param="shape" data-value="20">
-        <div class="knob-ring" style="border-color: #ec4899;"></div>
-        <div class="knob-body">
-          <div class="knob-inner"></div>
-          <div class="knob-indicator" style="background: #ec4899; box-shadow: 0 0 6px #ec4899;"></div>
+        <div class="knob-ring" style="border-color:#ec4899"></div>
+        <div class="knob-body"><div class="knob-inner"></div>
+          <div class="knob-indicator" style="background:#ec4899;box-shadow:0 0 6px #ec4899"></div>
         </div>
       </div>
-      <div class="text-center mt-2">
-        <div class="param-label" style="color: #ec4899;">SHAPE</div>
+      <div class="param-label" style="color:#ec4899">SHAPE</div>
+      <div class="flex gap-2 mt-1" data-modes="shape">
+        <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color:#ec4899;background:#ec4899"></div>
+        <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color:#ec4899"></div>
+        <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color:#ec4899"></div>
+        <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color:#ec4899"></div>
       </div>
-      <div class="flex gap-3 mt-2" data-modes="shape">
-        <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color: #ec4899; background: #ec4899;"></div>
-        <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color: #ec4899;"></div>
-        <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color: #ec4899;"></div>
-        <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color: #ec4899;"></div>
-      </div>
-      <div class="mode-name" data-mode-display="shape" style="color: #ec4899;">ORGANIC</div>
+      <div class="mode-name" data-mode-display="shape" style="color:#ec4899">ORGANIC</div>
     </div>
 
     <!-- SPACE -->
-    <div class="flex flex-col items-center gap-3">
-      <div class="toggle-container active" data-toggle="space" style="color: #6366f1;">
-        <div class="toggle-knob"></div>
-      </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="toggle-container active" data-toggle="space" style="color:#6366f1"><div class="toggle-knob"></div></div>
       <div class="knob-container" data-param="space" data-value="75">
-        <div class="knob-ring" style="border-color: #6366f1;"></div>
-        <div class="knob-body">
-          <div class="knob-inner"></div>
-          <div class="knob-indicator" style="background: #6366f1; box-shadow: 0 0 6px #6366f1;"></div>
+        <div class="knob-ring" style="border-color:#6366f1"></div>
+        <div class="knob-body"><div class="knob-inner"></div>
+          <div class="knob-indicator" style="background:#6366f1;box-shadow:0 0 6px #6366f1"></div>
         </div>
       </div>
-      <div class="text-center mt-2">
-        <div class="param-label" style="color: #6366f1;">SPACE</div>
+      <div class="param-label" style="color:#6366f1">SPACE</div>
+      <div class="flex gap-2 mt-1" data-modes="space">
+        <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color:#6366f1;background:#6366f1"></div>
+        <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color:#6366f1"></div>
+        <div class="mode-dot" data-mode="2" data-name="WIDE" style="color:#6366f1"></div>
+        <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color:#6366f1"></div>
       </div>
-      <div class="flex gap-3 mt-2" data-modes="space">
-        <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color: #6366f1; background: #6366f1;"></div>
-        <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color: #6366f1;"></div>
-        <div class="mode-dot" data-mode="2" data-name="WIDE" style="color: #6366f1;"></div>
-        <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color: #6366f1;"></div>
-      </div>
-      <div class="mode-name" data-mode-display="space" style="color: #6366f1;">ROOM</div>
+      <div class="mode-name" data-mode-display="space" style="color:#6366f1">ROOM</div>
     </div>
 
   </div>
 
   <!-- Footer -->
-  <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-[9px] tracking-[0.2em] text-white/25">
+  <div class="mt-6 pt-3 border-t border-white/5 flex items-center justify-between text-[8px] tracking-[0.2em] text-white/20">
     <span>PRESET: INK IN WATER</span>
-    <div class="flex gap-6">
-      <span>◀ PREV</span>
-      <span>SAVE</span>
-      <span>NEXT ▶</span>
+    <div class="flex gap-5">
+      <span>◀ PREV</span><span>SAVE</span><span>NEXT ▶</span>
     </div>
   </div>
 
 </div>
 
 <script>
-// --- 3D Perlin Noise ---
 class PerlinNoise3D {
-  constructor(seed = 0) {
-    this.perm = new Uint8Array(512);
-    const p = new Uint8Array(256);
-    for (let i = 0; i < 256; i++) p[i] = i;
-    let n = seed || Math.random() * 65536;
-    for (let i = 255; i > 0; i--) {
-      n = (n * 16807) % 2147483647;
-      const j = n % (i + 1);
-      [p[i], p[j]] = [p[j], p[i]];
-    }
-    for (let i = 0; i < 512; i++) this.perm[i] = p[i & 255];
-  }
-  fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
-  lerp(a, b, t) { return a + t * (b - a); }
-  grad(hash, x, y, z) {
-    const h = hash & 15;
-    const u = h < 8 ? x : y;
-    const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
-    return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
-  }
-  noise(x, y, z) {
-    const X = Math.floor(x) & 255;
-    const Y = Math.floor(y) & 255;
-    const Z = Math.floor(z) & 255;
-    x -= Math.floor(x);
-    y -= Math.floor(y);
-    z -= Math.floor(z);
-    const u = this.fade(x);
-    const v = this.fade(y);
-    const w = this.fade(z);
-    const A = this.perm[X] + Y;
-    const AA = this.perm[A] + Z;
-    const AB = this.perm[A + 1] + Z;
-    const B = this.perm[X + 1] + Y;
-    const BA = this.perm[B] + Z;
-    const BB = this.perm[B + 1] + Z;
-    return this.lerp(
-      this.lerp(
-        this.lerp(this.grad(this.perm[AA], x, y, z), this.grad(this.perm[BA], x - 1, y, z), u),
-        this.lerp(this.grad(this.perm[AB], x, y - 1, z), this.grad(this.perm[BB], x - 1, y - 1, z), u),
-        v
-      ),
-      this.lerp(
-        this.lerp(this.grad(this.perm[AA + 1], x, y, z - 1), this.grad(this.perm[BA + 1], x - 1, y, z - 1), u),
-        this.lerp(this.grad(this.perm[AB + 1], x, y - 1, z - 1), this.grad(this.perm[BB + 1], x - 1, y - 1, z - 1), u),
-        v
-      ),
-      w
-    );
-  }
+  constructor(seed=0){this.perm=new Uint8Array(512);const p=new Uint8Array(256);for(let i=0;i<256;i++)p[i]=i;let n=seed||Math.random()*65536;for(let i=255;i>0;i--){n=(n*16807)%2147483647;const j=n%(i+1);[p[i],p[j]]=[p[j],p[i]]}for(let i=0;i<512;i++)this.perm[i]=p[i&255]}
+  fade(t){return t*t*t*(t*(t*6-15)+10)}
+  lerp(a,b,t){return a+t*(b-a)}
+  grad(h,x,y,z){const k=h&15;const u=k<8?x:y;const v=k<4?y:k===12||k===14?x:z;return((k&1)?-u:u)+((k&2)?-v:v)}
+  noise(x,y,z){const X=Math.floor(x)&255,Y=Math.floor(y)&255,Z=Math.floor(z)&255;x-=Math.floor(x);y-=Math.floor(y);z-=Math.floor(z);const u=this.fade(x),v=this.fade(y),w=this.fade(z);const A=this.perm[X]+Y,AA=this.perm[A]+Z,AB=this.perm[A+1]+Z,B=this.perm[X+1]+Y,BA=this.perm[B]+Z,BB=this.perm[B+1]+Z;return this.lerp(this.lerp(this.lerp(this.grad(this.perm[AA],x,y,z),this.grad(this.perm[BA],x-1,y,z),u),this.lerp(this.grad(this.perm[AB],x,y-1,z),this.grad(this.perm[BB],x-1,y-1,z),u),v),this.lerp(this.lerp(this.grad(this.perm[AA+1],x,y,z-1),this.grad(this.perm[BA+1],x-1,y,z-1),u),this.lerp(this.grad(this.perm[AB+1],x,y-1,z-1),this.grad(this.perm[BB+1],x-1,y-1,z-1),u),v),w)}
 }
+const perlinA=new PerlinNoise3D(42),perlinB=new PerlinNoise3D(137);
+const canvas=document.getElementById('fluidCanvas'),ctx=canvas.getContext('2d');
 
-const perlinA = new PerlinNoise3D(42);
-const perlinB = new PerlinNoise3D(137);
-
-const canvas = document.getElementById('fluidCanvas');
-const ctx = canvas.getContext('2d');
-
-const state = {
-  motion: { value: 35, mode: 0, color: [6, 182, 212], zone: 0, active: true },
-  texture: { value: 60, mode: 0, color: [245, 158, 11], zone: 1, active: true },
-  shape: { value: 20, mode: 0, color: [236, 72, 153], zone: 2, active: true },
-  space: { value: 75, mode: 0, color: [99, 102, 241], zone: 3, active: true },
-  memory: 50,
-  focus: 'recent'
+const state={
+  motion:{value:35,mode:0,color:[6,182,212],zone:0,active:true},
+  texture:{value:60,mode:0,color:[245,158,11],zone:1,active:true},
+  shape:{value:20,mode:0,color:[236,72,153],zone:2,active:true},
+  space:{value:75,mode:0,color:[99,102,241],zone:3,active:true},
+  memory:50, focus:'recent'
 };
 
-const transitions = [];
+const transitions=[];
+function addTransition(type,dur=0.8){transitions.push({type,start:performance.now()/1000,dur,progress:0})}
+function getTransEffect(time){let e={distortion:0,pulse:0,wind:0,grain:0};for(let i=transitions.length-1;i>=0;i--){const t=transitions[i],el=time-t.start;t.progress=Math.min(1,el/t.dur);if(t.progress>=1){transitions.splice(i,1);continue}const I=Math.sin(t.progress*Math.PI);if(t.type==='pulse')e.pulse+=I*0.5;else if(t.type==='wind')e.wind+=I*0.3;else if(t.type==='grain')e.grain+=I*0.4;else if(t.type==='distort')e.distortion+=I*0.3}return e}
 
-function addTransition(type, param, duration = 0.8) {
-  transitions.push({
-    type,
-    param,
-    startTime: performance.now() / 1000,
-    duration,
-    progress: 0
-  });
-}
-
-function getTransitionEffect(time) {
-  let effect = { distortion: 0, pulse: 0, wind: 0, grain: 0 };
-  
-  for (let i = transitions.length - 1; i >= 0; i--) {
-    const t = transitions[i];
-    const elapsed = time - t.startTime;
-    t.progress = Math.min(1, elapsed / t.duration);
-    
-    if (t.progress >= 1) {
-      transitions.splice(i, 1);
-      continue;
-    }
-    
-    const intensity = Math.sin(t.progress * Math.PI);
-    
-    if (t.type === 'pulse') effect.pulse += intensity * 0.5;
-    else if (t.type === 'wind') effect.wind += intensity * 0.3;
-    else if (t.type === 'grain') effect.grain += intensity * 0.4;
-    else if (t.type === 'distort') effect.distortion += intensity * 0.3;
-  }
-  
-  return effect;
-}
-
-const modeCharacteristics = {
-  motion: [
-    { speedMod: 1.0, scaleMod: 1.0, turbulence: 0 },
-    { speedMod: 1.5, scaleMod: 0.8, turbulence: 0.3 },
-    { speedMod: 0.3, scaleMod: 1.2, turbulence: 0.1 },
-    { speedMod: 2.5, scaleMod: 0.6, turbulence: 0.5 },
-  ],
-  texture: [
-    { brightness: 1.2, contrast: 0.8, grain: 0 },
-    { brightness: 0.9, contrast: 1.1, grain: 0.1 },
-    { brightness: 1.3, contrast: 1.4, grain: 0.2 },
-    { brightness: 1.0, contrast: 0.9, grain: 0 },
-    { brightness: 0.8, contrast: 1.2, grain: 0.3 },
-  ],
-  shape: [
-    { sharpness: 0.5, diffusion: 0 },
-    { sharpness: 1.5, diffusion: 0 },
-    { sharpness: 0.7, diffusion: 0.4 },
-    { sharpness: 1.2, diffusion: 0.2 },
-  ],
-  space: [
-    { spread: 0.8, depth: 0.5 },
-    { spread: 1.2, depth: 0.8 },
-    { spread: 1.5, depth: 0.6 },
-    { spread: 1.0, depth: 1.5 },
-  ]
+const MC={
+  motion:[{sp:1,sc:1,tu:0},{sp:1.5,sc:.8,tu:.3},{sp:.3,sc:1.2,tu:.1},{sp:2.5,sc:.6,tu:.5}],
+  texture:[{br:1.2,co:.8,gr:0},{br:.9,co:1.1,gr:.1},{br:1.3,co:1.4,gr:.2},{br:1,co:.9,gr:0},{br:.8,co:1.2,gr:.3}],
+  shape:[{sh:.5,di:0},{sh:1.5,di:0},{sh:.7,di:.4},{sh:1.2,di:.2}],
+  space:[{sp:.8,de:.5},{sp:1.2,de:.8},{sp:1.5,de:.6},{sp:1,de:1.5}]
 };
+const FC={recent:{ts:1,dc:0},balanced:{ts:.7,dc:.5},ancient:{ts:.4,dc:1}};
 
-const focusCharacteristics = {
-  recent: { timeScale: 1.0, decay: 0.0, freshness: 1.0 },
-  balanced: { timeScale: 0.7, decay: 0.5, freshness: 0.5 },
-  ancient: { timeScale: 0.4, decay: 1.0, freshness: 0.0 }
-};
+function resize(){const r=canvas.getBoundingClientRect();canvas.width=r.width*devicePixelRatio;canvas.height=r.height*devicePixelRatio}
+window.addEventListener('resize',resize);resize();
 
-function resize() {
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * devicePixelRatio;
-  canvas.height = rect.height * devicePixelRatio;
+// Memory Orb
+const memoryOrb=document.getElementById('memoryOrb'),memoryCore=document.getElementById('memoryCore'),memoryDisplay=document.querySelector('[data-memory-display]');
+let memDrag=false,memStartY=0,memStartVal=0;
+function updateMem(){
+  const v=state.memory;
+  memoryDisplay.textContent=Math.round(v)+'%';
+  const s=14+(v/100)*32;
+  memoryCore.style.width=s+'px';memoryCore.style.height=s+'px';
+  const g=.3+(v/100)*.7;
+  memoryCore.style.boxShadow=`0 0 ${16*g}px rgba(167,139,250,${.6*g}),0 0 ${32*g}px rgba(124,58,237,${.4*g})`;
+  document.querySelectorAll('.memory-ring').forEach(r=>{r.style.animationDuration=(3-(v/100)*2)+'s'});
 }
-window.addEventListener('resize', resize);
-resize();
+updateMem();
+memoryOrb.addEventListener('mousedown',e=>{memDrag=true;memStartY=e.clientY;memStartVal=state.memory;e.preventDefault()});
+window.addEventListener('mousemove',e=>{if(!memDrag)return;state.memory=Math.max(0,Math.min(100,memStartVal+(memStartY-e.clientY)*.5));updateMem()});
+window.addEventListener('mouseup',()=>{memDrag=false});
 
-// Memory Orb interaction
-const memoryOrb = document.getElementById('memoryOrb');
-const memoryCore = document.getElementById('memoryCore');
-const memoryDisplay = document.querySelector('[data-memory-display]');
-let memoryDragging = false;
-let memoryStartY = 0;
-let memoryStartValue = 0;
+// Focus
+document.querySelectorAll('.focus-option').forEach(o=>{o.addEventListener('click',()=>{
+  document.querySelectorAll('.focus-option').forEach(x=>x.classList.remove('active'));
+  o.classList.add('active');state.focus=o.dataset.focus;
+  if(state.focus==='recent')addTransition('wind',.6);else if(state.focus==='ancient')addTransition('pulse',1.2);
+})});
 
-function updateMemoryVisual() {
-  const value = state.memory;
-  memoryDisplay.textContent = Math.round(value) + '%';
-  
-  // Core size: 14px (low) to 46px (high) — passend zum 76px Orb
-  const coreSize = 14 + (value / 100) * 32;
-  memoryCore.style.width = coreSize + 'px';
-  memoryCore.style.height = coreSize + 'px';
-  
-  const glowIntensity = 0.3 + (value / 100) * 0.7;
-  memoryCore.style.boxShadow = `
-    0 0 ${15 * glowIntensity}px rgba(167, 139, 250, ${0.6 * glowIntensity}),
-    0 0 ${30 * glowIntensity}px rgba(124, 58, 237, ${0.4 * glowIntensity})
-  `;
-  
-  const rings = document.querySelectorAll('.memory-ring');
-  rings.forEach((ring, i) => {
-    const duration = 3 - (value / 100) * 2;
-    ring.style.animationDuration = duration + 's';
-    ring.style.opacity = glowIntensity * 0.5;
-  });
-}
+// Toggles
+document.querySelectorAll('.toggle-container').forEach(t=>{t.addEventListener('click',()=>{
+  const p=t.dataset.toggle,a=t.classList.toggle('active');state[p].active=a;
+  const k=document.querySelector(`.knob-container[data-param="${p}"]`);a?k.classList.remove('disabled'):k.classList.add('disabled');
+})});
 
-updateMemoryVisual();
-
-memoryOrb.addEventListener('mousedown', e => {
-  memoryDragging = true;
-  memoryStartY = e.clientY;
-  memoryStartValue = state.memory;
-  e.preventDefault();
+// Knobs
+document.querySelectorAll('.knob-container').forEach(knob=>{
+  let drag=false,sy=0,sv=0;const p=knob.dataset.param;
+  const upd=()=>{state[p].value=+knob.dataset.value;knob.querySelector('.knob-indicator').style.transform=`rotate(${-135+(state[p].value/100)*270}deg)`};
+  upd();
+  knob.addEventListener('mousedown',e=>{if(knob.classList.contains('disabled'))return;drag=true;sy=e.clientY;sv=+knob.dataset.value;e.preventDefault()});
+  window.addEventListener('mousemove',e=>{if(!drag)return;knob.dataset.value=Math.max(0,Math.min(100,sv+(sy-e.clientY)*.5));upd()});
+  window.addEventListener('mouseup',()=>{drag=false});
 });
 
-window.addEventListener('mousemove', e => {
-  if (!memoryDragging) return;
-  const delta = (memoryStartY - e.clientY) * 0.5;
-  const newValue = Math.max(0, Math.min(100, memoryStartValue + delta));
-  state.memory = newValue;
-  memoryOrb.dataset.value = newValue;
-  updateMemoryVisual();
+// Modes
+document.querySelectorAll('[data-modes]').forEach(g=>{
+  const p=g.dataset.modes,disp=document.querySelector(`[data-mode-display="${p}"]`);
+  g.querySelectorAll('.mode-dot').forEach(d=>{d.addEventListener('click',()=>{
+    g.querySelectorAll('.mode-dot').forEach(x=>{x.classList.remove('active');x.style.background='#2a2d36'});
+    d.classList.add('active');d.style.background=d.style.color;state[p].mode=+d.dataset.mode;disp.textContent=d.dataset.name;
+    const n=d.dataset.name;
+    if(p==='motion'){if(n==='PULSE')addTransition('pulse',1);else if(n==='FLOW')addTransition('wind',.8);else if(n==='CHAOS')addTransition('distort',.6)}
+    else if(p==='texture'){if(n==='CRYSTAL'||n==='FABRIC')addTransition('grain',.7);else if(n==='WATER')addTransition('wind',.9)}
+    else if(p==='shape'){if(n==='GRAIN')addTransition('grain',.8);else if(n==='DIFFUSE')addTransition('wind',1)}
+  })});
 });
 
-window.addEventListener('mouseup', () => {
-  memoryDragging = false;
-});
+function zoneWeight(x,c,w){const d=Math.abs(x-c);return d>w?0:Math.cos((d/w)*Math.PI*.5)}
 
-// Focus switch
-document.querySelectorAll('.focus-option').forEach(option => {
-  option.addEventListener('click', () => {
-    document.querySelectorAll('.focus-option').forEach(o => o.classList.remove('active'));
-    option.classList.add('active');
-    state.focus = option.dataset.focus;
-    
-    if (state.focus === 'recent') addTransition('wind', 'focus', 0.6);
-    else if (state.focus === 'ancient') addTransition('pulse', 'focus', 1.2);
-  });
-});
+let t=0;
+function render(){
+  const W=canvas.width,H=canvas.height,ct=performance.now()/1000;
+  const fc=FC[state.focus];t+=.008*fc.ts;
+  ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,W,H);
+  const step=4,cols=Math.ceil(W/step),rows=Math.ceil(H/step);
+  const imgData=ctx.createImageData(W,H),data=imgData.data;
+  const te=getTransEffect(ct);
+  const mC=MC.motion[state.motion.mode],tC=MC.texture[state.texture.mode],sC=MC.shape[state.shape.mode],pC=MC.space[state.space.mode];
+  const mp=state.memory/100,zw=.25;
 
-// Toggle
-document.querySelectorAll('.toggle-container').forEach(toggle => {
-  toggle.addEventListener('click', () => {
-    const param = toggle.dataset.toggle;
-    const isActive = toggle.classList.toggle('active');
-    state[param].active = isActive;
-    
-    const knob = document.querySelector(`.knob-container[data-param="${param}"]`);
-    if (isActive) knob.classList.remove('disabled');
-    else knob.classList.add('disabled');
-  });
-});
+  for(let y=0;y<rows;y++){for(let x=0;x<cols;x++){
+    const nx=x/cols,ny=y/rows;let r=0,g=0,b=0;
+    let dx=0,dy=0;
+    if(te.pulse>0){const d=Math.sqrt((nx-.5)**2+(ny-.5)**2),w=Math.sin(d*20-te.pulse*10)*te.pulse*.05;dx+=w*(nx-.5);dy+=w*(ny-.5)}
+    if(te.wind>0)dx+=Math.sin(ny*10+t*3)*te.wind*.03;
+    let ff=1;if(fc.dc>0){const d=Math.sqrt((nx-.5)**2+(ny-.5)**2);ff=Math.max(.3,1-d*fc.dc*.8)}
+    const ax=nx+dx,ay=ny+dy;
 
-// Knob
-document.querySelectorAll('.knob-container').forEach(knob => {
-  let isDragging = false;
-  let startY = 0;
-  let startValue = 0;
-  const param = knob.dataset.param;
-  
-  const updateVisual = () => {
-    const value = +knob.dataset.value;
-    state[param].value = value;
-    const angle = -135 + (value / 100) * 270;
-    const indicator = knob.querySelector('.knob-indicator');
-    indicator.style.transform = `rotate(${angle}deg)`;
-  };
-  
-  updateVisual();
-  
-  knob.addEventListener('mousedown', e => {
-    if (knob.classList.contains('disabled')) return;
-    isDragging = true;
-    startY = e.clientY;
-    startValue = +knob.dataset.value;
-    e.preventDefault();
-  });
-  
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const delta = (startY - e.clientY) * 0.5;
-    const newValue = Math.max(0, Math.min(100, startValue + delta));
-    knob.dataset.value = newValue;
-    updateVisual();
-  });
-  
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
-});
-
-// Mode dots
-document.querySelectorAll('[data-modes]').forEach(group => {
-  const param = group.dataset.modes;
-  const display = document.querySelector(`[data-mode-display="${param}"]`);
-  
-  group.querySelectorAll('.mode-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      group.querySelectorAll('.mode-dot').forEach(d => {
-        d.classList.remove('active');
-        d.style.background = '#2a2d36';
-      });
-      dot.classList.add('active');
-      dot.style.background = dot.style.color;
-      state[param].mode = +dot.dataset.mode;
-      display.textContent = dot.dataset.name;
-      
-      const modeName = dot.dataset.name;
-      if (param === 'motion') {
-        if (modeName === 'PULSE') addTransition('pulse', param, 1.0);
-        else if (modeName === 'FLOW') addTransition('wind', param, 0.8);
-        else if (modeName === 'CHAOS') addTransition('distort', param, 0.6);
-      } else if (param === 'texture') {
-        if (modeName === 'CRYSTAL' || modeName === 'FABRIC') addTransition('grain', param, 0.7);
-        else if (modeName === 'WATER') addTransition('wind', param, 0.9);
-      } else if (param === 'shape') {
-        if (modeName === 'GRAIN') addTransition('grain', param, 0.8);
-        else if (modeName === 'DIFFUSE') addTransition('wind', param, 1.0);
-      }
-    });
-  });
-});
-
-function zoneWeight(x, zoneCenter, zoneWidth) {
-  const dist = Math.abs(x - zoneCenter);
-  if (dist > zoneWidth) return 0;
-  return Math.cos((dist / zoneWidth) * Math.PI * 0.5);
-}
-
-let t = 0;
-function render() {
-  const W = canvas.width;
-  const H = canvas.height;
-  
-  const currentTime = performance.now() / 1000;
-  
-  const focusChar = focusCharacteristics[state.focus];
-  t += 0.008 * focusChar.timeScale;
-  
-  ctx.fillStyle = '#0a0b0f';
-  ctx.fillRect(0, 0, W, H);
-  
-  const step = 4;
-  const cols = Math.ceil(W / step);
-  const rows = Math.ceil(H / step);
-  
-  const imgData = ctx.createImageData(W, H);
-  const data = imgData.data;
-  
-  const transEffect = getTransitionEffect(currentTime);
-  
-  const motionChar = modeCharacteristics.motion[state.motion.mode];
-  const textureChar = modeCharacteristics.texture[state.texture.mode];
-  const shapeChar = modeCharacteristics.shape[state.shape.mode];
-  const spaceChar = modeCharacteristics.space[state.space.mode];
-  
-  const memoryPersistence = state.memory / 100;
-  
-  const zoneWidth = 0.25;
-  
-  for (let y = 0; y < rows; y++) {
-    for (let x = 0; x < cols; x++) {
-      const nx = x / cols;
-      const ny = y / rows;
-      
-      let r = 0, g = 0, b = 0;
-      
-      let distortX = 0, distortY = 0;
-      if (transEffect.pulse > 0) {
-        const distFromCenter = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.5, 2));
-        const wave = Math.sin(distFromCenter * 20 - transEffect.pulse * 10) * transEffect.pulse * 0.05;
-        distortX += wave * (nx - 0.5);
-        distortY += wave * (ny - 0.5);
-      }
-      if (transEffect.wind > 0) {
-        distortX += Math.sin(ny * 10 + t * 3) * transEffect.wind * 0.03;
-      }
-      
-      let focusFade = 1.0;
-      if (focusChar.decay > 0) {
-        const distFromCenter = Math.sqrt(Math.pow(nx - 0.5, 2) + Math.pow(ny - 0.5, 2));
-        focusFade = 1.0 - distFromCenter * focusChar.decay * 0.8;
-        focusFade = Math.max(0.3, focusFade);
-      }
-      
-      const adjNx = nx + distortX;
-      const adjNy = ny + distortY;
-      
-      for (const [key, param] of Object.entries(state)) {
-        if (key === 'focus' || key === 'memory' || !param.active) continue;
-        
-        const zoneCenter = (param.zone + 0.5) / 4;
-        const weight = zoneWeight(adjNx, zoneCenter, zoneWidth);
-        
-        if (weight < 0.01) continue;
-        
-        const mix = param.value / 100;
-        
-        let speedMod = 1.0, scaleMod = 1.0, turbulence = 0;
-        let brightness = 1.0, contrast = 1.0, grainAmount = 0;
-        let sharpness = 1.0, diffusion = 0;
-        let spread = 1.0, depth = 1.0;
-        
-        if (key === 'motion') {
-          speedMod = motionChar.speedMod;
-          scaleMod = motionChar.scaleMod;
-          turbulence = motionChar.turbulence;
-        } else if (key === 'texture') {
-          brightness = textureChar.brightness;
-          contrast = textureChar.contrast;
-          grainAmount = textureChar.grain;
-        } else if (key === 'shape') {
-          sharpness = shapeChar.sharpness;
-          diffusion = shapeChar.diffusion;
-        } else if (key === 'space') {
-          spread = spaceChar.spread;
-          depth = spaceChar.depth;
-        }
-        
-        const scaleA = 2.0 * scaleMod * spread;
-        const speedA = 0.15 * speedMod;
-        let vA = perlinA.noise(adjNx * scaleA, adjNy * scaleA, t * speedA);
-        
-        const scaleB = (5.0 + mix * 3.0) * scaleMod;
-        const speedB = (0.5 + mix * 0.5) * speedMod;
-        let vB = perlinB.noise(adjNx * scaleB, adjNy * scaleB, t * speedB);
-        
-        if (turbulence > 0) {
-          const turb = perlinA.noise(adjNx * 8, adjNy * 8, t * 2) * turbulence;
-          vA += turb;
-          vB += turb;
-        }
-        
-        let v = vA * (1 - mix) + vB * mix;
-        
-        if (memoryPersistence > 0.3) {
-          const echo1 = perlinA.noise(adjNx * 2, adjNy * 2, t * 0.1) * memoryPersistence * 0.2;
-          const echo2 = perlinB.noise(adjNx * 1.5, adjNy * 1.5, t * 0.05) * memoryPersistence * 0.15;
-          v += echo1 + echo2;
-        }
-        
-        if (focusChar.decay > 0.3) {
-          const ghost = perlinA.noise(adjNx * 1.5, adjNy * 1.5, t * 0.05) * focusChar.decay * 0.3;
-          v += ghost;
-        }
-        
-        v = Math.sign(v) * Math.pow(Math.abs(v), 1 / sharpness);
-        
-        if (diffusion > 0) {
-          const blur = perlinB.noise(adjNx * 3, adjNy * 3, t * 0.5) * diffusion;
-          v = v * (1 - diffusion) + blur;
-        }
-        
-        let intensity = (v + 1) / 2;
-        intensity = ((intensity - 0.5) * contrast + 0.5) * brightness;
-        intensity = Math.max(0, Math.min(1, intensity));
-        
-        if (grainAmount > 0 || transEffect.grain > 0) {
-          const grain = perlinB.noise(adjNx * 20, adjNy * 20, t * 5) * (grainAmount + transEffect.grain);
-          intensity += grain * 0.2;
-        }
-        
-        intensity *= (0.7 + depth * 0.3);
-        intensity *= focusFade;
-        
-        r += param.color[0] * intensity * weight;
-        g += param.color[1] * intensity * weight;
-        b += param.color[2] * intensity * weight;
-      }
-      
-      for (let dy = 0; dy < step && y * step + dy < H; dy++) {
-        for (let dx = 0; dx < step && x * step + dx < W; dx++) {
-          const idx = ((y * step + dy) * W + (x * step + dx)) * 4;
-          data[idx] = Math.min(255, Math.max(0, r));
-          data[idx + 1] = Math.min(255, Math.max(0, g));
-          data[idx + 2] = Math.min(255, Math.max(0, b));
-          data[idx + 3] = 255;
-        }
-      }
+    for(const[key,param]of Object.entries(state)){
+      if(key==='focus'||key==='memory'||!param.active)continue;
+      const zc=(param.zone+.5)/4,wt=zoneWeight(ax,zc,zw);if(wt<.01)continue;
+      const mix=param.value/100;
+      let spM=1,scM=1,tu=0,br=1,co=1,gr=0,sh=1,di=0,sp=1,de=1;
+      if(key==='motion'){spM=mC.sp;scM=mC.sc;tu=mC.tu}else if(key==='texture'){br=tC.br;co=tC.co;gr=tC.gr}else if(key==='shape'){sh=sC.sh;di=sC.di}else if(key==='space'){sp=pC.sp;de=pC.de}
+      let vA=perlinA.noise(ax*2*scM*sp,ay*2*scM*sp,t*.15*spM);
+      let vB=perlinB.noise(ax*(5+mix*3)*scM,ay*(5+mix*3)*scM,t*(.5+mix*.5)*spM);
+      if(tu>0){const tb=perlinA.noise(ax*8,ay*8,t*2)*tu;vA+=tb;vB+=tb}
+      let v=vA*(1-mix)+vB*mix;
+      if(mp>.3){v+=perlinA.noise(ax*2,ay*2,t*.1)*mp*.2+perlinB.noise(ax*1.5,ay*1.5,t*.05)*mp*.15}
+      if(fc.dc>.3)v+=perlinA.noise(ax*1.5,ay*1.5,t*.05)*fc.dc*.3;
+      v=Math.sign(v)*Math.pow(Math.abs(v),1/sh);
+      if(di>0)v=v*(1-di)+perlinB.noise(ax*3,ay*3,t*.5)*di;
+      let I=Math.max(0,Math.min(1,((v+1)/2-.5)*co+.5)*br);
+      if(gr>0||te.grain>0)I+=perlinB.noise(ax*20,ay*20,t*5)*(gr+te.grain)*.2;
+      I*=(.7+de*.3)*ff;
+      r+=param.color[0]*I*wt;g+=param.color[1]*I*wt;b+=param.color[2]*I*wt;
     }
-  }
-  
-  ctx.putImageData(imgData, 0, 0);
-  
-  const grad = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.6);
-  grad.addColorStop(0, 'rgba(0,0,0,0)');
-  grad.addColorStop(1, 'rgba(0,0,0,0.5)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, W, H);
-  
+    for(let ddy=0;ddy<step&&y*step+ddy<H;ddy++){for(let ddx=0;ddx<step&&x*step+ddx<W;ddx++){const idx=((y*step+ddy)*W+(x*step+ddx))*4;data[idx]=Math.min(255,Math.max(0,r));data[idx+1]=Math.min(255,Math.max(0,g));data[idx+2]=Math.min(255,Math.max(0,b));data[idx+3]=255}}
+  }}
+  ctx.putImageData(imgData,0,0);
+  const grad=ctx.createRadialGradient(W/2,H/2,W*.25,W/2,H/2,W*.6);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(1,'rgba(0,0,0,0.5)');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
   requestAnimationFrame(render);
 }
 render();
 </script>
-
 </body>
 </html>
