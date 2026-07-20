@@ -118,7 +118,7 @@
       position: relative; display: flex; align-items: center; justify-content: center;
     }
     .memory-core {
-      border-radius: 50%; background: radial-gradient(circle at 35% 35%, #c4b5fd, #7c3aed);
+      border-radius: 50%; background: radial-gradient(circle at 35% 35%, #6B5A00, #FFE55C);
       transition: width 0.15s, height 0.15s, box-shadow 0.15s; position: relative; z-index: 2;
     }
     .memory-ring {
@@ -131,7 +131,7 @@
       100% { width: 72px; height: 72px; opacity: 0; }
     }
     .memory-meta { display: flex; flex-direction: column; gap: 2px; }
-    .memory-meta-label { font-size: 9px; letter-spacing: 0.2em; font-weight: 500; color: #a78bfa; }
+    .memory-meta-label { font-size: 9px; letter-spacing: 0.2em; font-weight: 500; color: #FFE55C; }
     .memory-meta-value { font-size: 18px; font-weight: 300; color: rgba(255, 255, 255, 0.7); letter-spacing: 0.05em; line-height: 1; }
     .memory-meta-hint { font-size: 8px; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.2); }
 
@@ -379,71 +379,71 @@
     <div class="grid grid-cols-4 gap-5">
       <!-- MOTION -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="motion" style="color:#06b6d4"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="motion" style="color:#00D4AA"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="motion" data-value="35">
-          <div class="knob-ring" style="border-color:#06b6d4"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#06b6d4;box-shadow:0 0 6px #06b6d4"></div></div>
+          <div class="knob-ring" style="border-color:#00D4AA"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#00D4AA;box-shadow:0 0 6px #00D4AA"></div></div>
         </div>
-        <div class="param-label" style="color:#06b6d4">MOTION</div>
+        <div class="param-label" style="color:#00D4AA">MOTION</div>
         <div class="flex gap-2 mt-1" data-modes="motion">
-          <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color:#06b6d4;background:#06b6d4"></div>
-          <div class="mode-dot" data-mode="1" data-name="PULSE" style="color:#06b6d4"></div>
-          <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color:#06b6d4"></div>
-          <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color:#06b6d4"></div>
+          <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color:#00D4AA;background:#00D4AA"></div>
+          <div class="mode-dot" data-mode="1" data-name="PULSE" style="color:#00D4AA"></div>
+          <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color:#00D4AA"></div>
+          <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color:#00D4AA"></div>
         </div>
-        <div class="mode-name" data-mode-display="motion" style="color:#06b6d4">FLOW</div>
+        <div class="mode-name" data-mode-display="motion" style="color:#00D4AA">FLOW</div>
       </div>
 
       <!-- TEXTURE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="texture" style="color:#f59e0b"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="texture" style="color:#FF8A3D"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="texture" data-value="60">
-          <div class="knob-ring" style="border-color:#f59e0b"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#f59e0b;box-shadow:0 0 6px #f59e0b"></div></div>
+          <div class="knob-ring" style="border-color:#FF8A3D"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#FF8A3D;box-shadow:0 0 6px #FF8A3D"></div></div>
         </div>
-        <div class="param-label" style="color:#f59e0b">TEXTURE</div>
+        <div class="param-label" style="color:#FF8A3D">TEXTURE</div>
         <div class="flex gap-2 mt-1" data-modes="texture">
-          <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color:#f59e0b;background:#f59e0b"></div>
-          <div class="mode-dot" data-mode="1" data-name="TAPE" style="color:#f59e0b"></div>
-          <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color:#f59e0b"></div>
-          <div class="mode-dot" data-mode="3" data-name="WATER" style="color:#f59e0b"></div>
-          <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color:#f59e0b"></div>
+          <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color:#FF8A3D;background:#FF8A3D"></div>
+          <div class="mode-dot" data-mode="1" data-name="TAPE" style="color:#FF8A3D"></div>
+          <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color:#FF8A3D"></div>
+          <div class="mode-dot" data-mode="3" data-name="WATER" style="color:#FF8A3D"></div>
+          <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color:#FF8A3D"></div>
         </div>
-        <div class="mode-name" data-mode-display="texture" style="color:#f59e0b">BLOOM</div>
+        <div class="mode-name" data-mode-display="texture" style="color:#FF8A3D">BLOOM</div>
       </div>
 
       <!-- SHAPE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="shape" style="color:#ec4899"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="shape" style="color:#C77DFF"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="shape" data-value="20">
-          <div class="knob-ring" style="border-color:#ec4899"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#ec4899;box-shadow:0 0 6px #ec4899"></div></div>
+          <div class="knob-ring" style="border-color:#C77DFF"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#C77DFF;box-shadow:0 0 6px #C77DFF"></div></div>
         </div>
-        <div class="param-label" style="color:#ec4899">SHAPE</div>
+        <div class="param-label" style="color:#C77DFF">SHAPE</div>
         <div class="flex gap-2 mt-1" data-modes="shape">
-          <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color:#ec4899;background:#ec4899"></div>
-          <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color:#ec4899"></div>
-          <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color:#ec4899"></div>
-          <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color:#ec4899"></div>
+          <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color:#C77DFF;background:#C77DFF"></div>
+          <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color:#C77DFF"></div>
+          <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color:#C77DFF"></div>
+          <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color:#C77DFF"></div>
         </div>
-        <div class="mode-name" data-mode-display="shape" style="color:#ec4899">ORGANIC</div>
+        <div class="mode-name" data-mode-display="shape" style="color:#C77DFF">ORGANIC</div>
       </div>
 
       <!-- SPACE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="space" style="color:#6366f1"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="space" style="color:#3D8BFF"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="space" data-value="75">
-          <div class="knob-ring" style="border-color:#6366f1"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#6366f1;box-shadow:0 0 6px #6366f1"></div></div>
+          <div class="knob-ring" style="border-color:#3D8BFF"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#3D8BFF;box-shadow:0 0 6px #3D8BFF"></div></div>
         </div>
-        <div class="param-label" style="color:#6366f1">SPACE</div>
+        <div class="param-label" style="color:#3D8BFF">SPACE</div>
         <div class="flex gap-2 mt-1" data-modes="space">
-          <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color:#6366f1;background:#6366f1"></div>
-          <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color:#6366f1"></div>
-          <div class="mode-dot" data-mode="2" data-name="WIDE" style="color:#6366f1"></div>
-          <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color:#6366f1"></div>
+          <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color:#3D8BFF;background:#3D8BFF"></div>
+          <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color:#3D8BFF"></div>
+          <div class="mode-dot" data-mode="2" data-name="WIDE" style="color:#3D8BFF"></div>
+          <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color:#3D8BFF"></div>
         </div>
-        <div class="mode-name" data-mode-display="space" style="color:#6366f1">ROOM</div>
+        <div class="mode-name" data-mode-display="space" style="color:#3D8BFF">ROOM</div>
       </div>
     </div>
 
