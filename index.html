@@ -7,15 +7,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      /* Dynamic Color Palette Variables */
+      --color-bg-main: #141517;
+      --color-plugin-frame: #1d1e22;
+      --color-memory-orb-core: #e08b33;
+      --color-memory-orb-aura: #b85d1d;
+      --color-memory-orb-highlight: #fce2a6;
+      --color-motion: #d96b27;
+      --color-texture: #c88a2b;
+      --color-shape: #b0833a;
+      --color-space: #8c6843;
+    }
+
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: #1a1c23;
+      background: var(--color-bg-main);
       color: #e8e8ee;
       overflow: hidden;
     }
 
     .plugin-frame {
-      background: #2a2d36;
+      background: var(--color-plugin-frame);
       border: 1px solid #3a3d48;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       position: relative; /* Für das absolute Overlay */
@@ -42,8 +55,8 @@
       position: absolute;
       inset: -20px -60px -28px;
       background:
-        radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.55), transparent 60%),
-        radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.35), transparent 65%);
+        radial-gradient(circle at 50% 0%, var(--color-memory-orb-core), transparent 60%),
+        radial-gradient(circle at 0% 100%, var(--color-memory-orb-aura), transparent 65%);
       filter: blur(26px);
       opacity: 0.75;
       z-index: -1;
@@ -64,7 +77,7 @@
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: #f9fafb;
-      text-shadow: 0 0 12px rgba(167, 139, 250, 0.9), 0 0 32px rgba(56, 189, 248, 0.4), 0 0 60px rgba(15, 23, 42, 0.8);
+      text-shadow: 0 0 12px var(--color-memory-orb-core), 0 0 32px var(--color-memory-orb-aura), 0 0 60px rgba(15, 23, 42, 0.8);
     }
 
     .plugin-subtitle {
@@ -114,16 +127,16 @@
     .memory-orb-shell {
       width: 100%; height: 100%; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.07), transparent 70%);
-      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(107, 90, 0, 0.15);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px var(--color-memory-orb-aura);
       position: relative; display: flex; align-items: center; justify-content: center;
     }
     .memory-core {
-      border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE55C, #FFD700);
+      border-radius: 50%; background: radial-gradient(circle at 35% 35%, var(--color-memory-orb-highlight), var(--color-memory-orb-core));
       transition: width 0.15s, height 0.15s, box-shadow 0.15s; position: relative; z-index: 2;
     }
     .memory-ring {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%;
-      border: 1.5px solid rgba(107, 90, 0, 0.35); opacity: 0; pointer-events: none;
+      border: 1.5px solid var(--color-memory-orb-aura); opacity: 0; pointer-events: none;
       animation: ring-pulse 3s ease-out infinite;
     }
     @keyframes ring-pulse {
@@ -131,7 +144,7 @@
       100% { width: 72px; height: 72px; opacity: 0; }
     }
     .memory-meta { display: flex; flex-direction: column; gap: 2px; }
-    .memory-meta-label { font-size: 9px; letter-spacing: 0.2em; font-weight: 500; color: #FFD700; }
+    .memory-meta-label { font-size: 9px; letter-spacing: 0.2em; font-weight: 500; color: var(--color-memory-orb-core); }
     .memory-meta-value { font-size: 18px; font-weight: 300; color: rgba(255, 255, 255, 0.7); letter-spacing: 0.05em; line-height: 1; }
     .memory-meta-hint { font-size: 8px; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.2); }
 
@@ -259,17 +272,17 @@
       color: rgba(255,255,255,0.8);
     }
     .category-item.active {
-      background: rgba(167, 139, 250, 0.1);
-      border-color: rgba(167, 139, 250, 0.3);
-      color: #c4b5fd;
-      box-shadow: 0 0 12px rgba(167, 139, 250, 0.1);
+      background: rgba(224, 139, 51, 0.1);
+      border-color: rgba(224, 139, 51, 0.3);
+      color: var(--color-memory-orb-highlight);
+      box-shadow: 0 0 12px rgba(224, 139, 51, 0.1);
     }
     /* Spezieller aktiver Zustand für USER */
     .category-item.active[data-val="user"] {
-      background: rgba(56, 189, 248, 0.1);
-      border-color: rgba(56, 189, 248, 0.3);
-      color: #7dd3fc;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.1);
+      background: rgba(217, 107, 39, 0.1);
+      border-color: rgba(217, 107, 39, 0.3);
+      color: var(--color-motion);
+      box-shadow: 0 0 12px rgba(217, 107, 39, 0.1);
     }
     
     .preset-list {
@@ -300,9 +313,9 @@
       color: #fff;
     }
     .preset-item.active-preset {
-      background: rgba(56, 189, 248, 0.1);
-      border-left: 2px solid #38bdf8;
-      color: #7dd3fc;
+      background: rgba(224, 139, 51, 0.1);
+      border-left: 2px solid var(--color-memory-orb-core);
+      color: var(--color-memory-orb-highlight);
     }
     .preset-meta {
       font-size: 9px;
@@ -332,7 +345,7 @@
         <p class="plugin-subtitle">ORGANIC MEMORY ENGINE</p>
       </div>
       <div class="flex items-center gap-3">
-        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+        <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
         <span class="text-[9px] tracking-[0.2em] text-white/35">ACTIVE</span>
       </div>
     </div>
@@ -379,71 +392,71 @@
     <div class="grid grid-cols-4 gap-5">
       <!-- MOTION -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="motion" style="color:#CBD5E1"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="motion" style="color:var(--color-motion)"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="motion" data-value="35">
-          <div class="knob-ring" style="border-color:#CBD5E1"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#CBD5E1;box-shadow:0 0 6px #CBD5E1"></div></div>
+          <div class="knob-ring" style="border-color:var(--color-motion)"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:var(--color-motion);box-shadow:0 0 6px var(--color-motion)"></div></div>
         </div>
-        <div class="param-label" style="color:#CBD5E1">MOTION</div>
+        <div class="param-label" style="color:var(--color-motion)">MOTION</div>
         <div class="flex gap-2 mt-1" data-modes="motion">
-          <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color:#CBD5E1;background:#CBD5E1"></div>
-          <div class="mode-dot" data-mode="1" data-name="PULSE" style="color:#CBD5E1"></div>
-          <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color:#CBD5E1"></div>
-          <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color:#CBD5E1"></div>
+          <div class="mode-dot active" data-mode="0" data-name="FLOW" style="color:var(--color-motion);background:var(--color-motion)"></div>
+          <div class="mode-dot" data-mode="1" data-name="PULSE" style="color:var(--color-motion)"></div>
+          <div class="mode-dot" data-mode="2" data-name="DRIFT" style="color:var(--color-motion)"></div>
+          <div class="mode-dot" data-mode="3" data-name="CHAOS" style="color:var(--color-motion)"></div>
         </div>
-        <div class="mode-name" data-mode-display="motion" style="color:#CBD5E1">FLOW</div>
+        <div class="mode-name" data-mode-display="motion" style="color:var(--color-motion)">FLOW</div>
       </div>
 
       <!-- TEXTURE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="texture" style="color:#EAB308"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="texture" style="color:var(--color-texture)"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="texture" data-value="60">
-          <div class="knob-ring" style="border-color:#EAB308"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#EAB308;box-shadow:0 0 6px #EAB308"></div></div>
+          <div class="knob-ring" style="border-color:var(--color-texture)"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:var(--color-texture);box-shadow:0 0 6px var(--color-texture)"></div></div>
         </div>
-        <div class="param-label" style="color:#EAB308">TEXTURE</div>
+        <div class="param-label" style="color:var(--color-texture)">TEXTURE</div>
         <div class="flex gap-2 mt-1" data-modes="texture">
-          <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color:#EAB308;background:#EAB308"></div>
-          <div class="mode-dot" data-mode="1" data-name="TAPE" style="color:#EAB308"></div>
-          <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color:#EAB308"></div>
-          <div class="mode-dot" data-mode="3" data-name="WATER" style="color:#EAB308"></div>
-          <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color:#EAB308"></div>
+          <div class="mode-dot active" data-mode="0" data-name="BLOOM" style="color:var(--color-texture);background:var(--color-texture)"></div>
+          <div class="mode-dot" data-mode="1" data-name="TAPE" style="color:var(--color-texture)"></div>
+          <div class="mode-dot" data-mode="2" data-name="CRYSTAL" style="color:var(--color-texture)"></div>
+          <div class="mode-dot" data-mode="3" data-name="WATER" style="color:var(--color-texture)"></div>
+          <div class="mode-dot" data-mode="4" data-name="FABRIC" style="color:var(--color-texture)"></div>
         </div>
-        <div class="mode-name" data-mode-display="texture" style="color:#EAB308">BLOOM</div>
+        <div class="mode-name" data-mode-display="texture" style="color:var(--color-texture)">BLOOM</div>
       </div>
 
       <!-- SHAPE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="shape" style="color:#B45309"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="shape" style="color:var(--color-shape)"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="shape" data-value="20">
-          <div class="knob-ring" style="border-color:#B45309"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#B45309;box-shadow:0 0 6px #B45309"></div></div>
+          <div class="knob-ring" style="border-color:var(--color-shape)"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:var(--color-shape);box-shadow:0 0 6px var(--color-shape)"></div></div>
         </div>
-        <div class="param-label" style="color:#B45309">SHAPE</div>
+        <div class="param-label" style="color:var(--color-shape)">SHAPE</div>
         <div class="flex gap-2 mt-1" data-modes="shape">
-          <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color:#B45309;background:#B45309"></div>
-          <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color:#B45309"></div>
-          <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color:#B45309"></div>
-          <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color:#B45309"></div>
+          <div class="mode-dot active" data-mode="0" data-name="ORGANIC" style="color:var(--color-shape);background:var(--color-shape)"></div>
+          <div class="mode-dot" data-mode="1" data-name="SPECTRAL" style="color:var(--color-shape)"></div>
+          <div class="mode-dot" data-mode="2" data-name="DIFFUSE" style="color:var(--color-shape)"></div>
+          <div class="mode-dot" data-mode="3" data-name="GRAIN" style="color:var(--color-shape)"></div>
         </div>
-        <div class="mode-name" data-mode-display="shape" style="color:#B45309">ORGANIC</div>
+        <div class="mode-name" data-mode-display="shape" style="color:var(--color-shape)">ORGANIC</div>
       </div>
 
       <!-- SPACE -->
       <div class="flex flex-col items-center gap-2">
-        <div class="toggle-container active" data-toggle="space" style="color:#78350F"><div class="toggle-knob"></div></div>
+        <div class="toggle-container active" data-toggle="space" style="color:var(--color-space)"><div class="toggle-knob"></div></div>
         <div class="knob-container" data-param="space" data-value="75">
-          <div class="knob-ring" style="border-color:#78350F"></div>
-          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:#78350F;box-shadow:0 0 6px #78350F"></div></div>
+          <div class="knob-ring" style="border-color:var(--color-space)"></div>
+          <div class="knob-body"><div class="knob-inner"></div><div class="knob-indicator" style="background:var(--color-space);box-shadow:0 0 6px var(--color-space)"></div></div>
         </div>
-        <div class="param-label" style="color:#78350F">SPACE</div>
+        <div class="param-label" style="color:var(--color-space)">SPACE</div>
         <div class="flex gap-2 mt-1" data-modes="space">
-          <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color:#78350F;background:#78350F"></div>
-          <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color:#78350F"></div>
-          <div class="mode-dot" data-mode="2" data-name="WIDE" style="color:#78350F"></div>
-          <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color:#78350F"></div>
+          <div class="mode-dot active" data-mode="0" data-name="ROOM" style="color:var(--color-space);background:var(--color-space)"></div>
+          <div class="mode-dot" data-mode="1" data-name="CLOUD" style="color:var(--color-space)"></div>
+          <div class="mode-dot" data-mode="2" data-name="WIDE" style="color:var(--color-space)"></div>
+          <div class="mode-dot" data-mode="3" data-name="INFINITE" style="color:var(--color-space)"></div>
         </div>
-        <div class="mode-name" data-mode-display="space" style="color:#78350F">ROOM</div>
+        <div class="mode-name" data-mode-display="space" style="color:var(--color-space)">ROOM</div>
       </div>
     </div>
 
@@ -582,8 +595,8 @@
         const div = document.createElement('div');
         div.className = `preset-item ${p.name === currentPreset ? 'active-preset' : ''}`;
         
-        // Spezielle Darstellung für User-Presets in der Liste
-        const authorDisplay = p.length === 'user' ? '<span style="color:#7dd3fc">User</span>' : p.author;
+        // Spezieller Zustand für User-Presets
+        const authorDisplay = p.length === 'user' ? '<span style="color:var(--color-motion)">User</span>' : p.author;
         
         div.innerHTML = `
           <span>${p.name}</span>
@@ -598,7 +611,7 @@
       });
     }
 
-    // --- EXISTING AETHERLOOM LOGIC (Unverändert) ---
+    // --- EXISTING AETHERLOOM LOGIC ---
     class PerlinNoise3D {
       constructor(seed = 0) { this.perm = new Uint8Array(512); const p = new Uint8Array(256); for (let i = 0; i < 256; i++)p[i] = i; let n = seed || Math.random() * 65536; for (let i = 255; i > 0; i--) { n = (n * 16807) % 2147483647; const j = n % (i + 1);[p[i], p[j]] = [p[j], p[i]] } for (let i = 0; i < 512; i++)this.perm[i] = p[i & 255] }
       fade(t) { return t * t * t * (t * (t * 6 - 15) + 10) }
@@ -610,10 +623,10 @@
     const canvas = document.getElementById('fluidCanvas'), ctx = canvas.getContext('2d');
 
     const state = {
-      motion: { value: 35, mode: 0, color: [203, 213, 225], zone: 0, active: true },
-      texture: { value: 60, mode: 0, color: [234, 179, 8], zone: 1, active: true },
-      shape: { value: 20, mode: 0, color: [180, 83, 9], zone: 2, active: true },
-      space: { value: 75, mode: 0, color: [120, 53, 15], zone: 3, active: true },
+      motion: { value: 35, mode: 0, color: [217, 107, 39], zone: 0, active: true },
+      texture: { value: 60, mode: 0, color: [200, 138, 43], zone: 1, active: true },
+      shape: { value: 20, mode: 0, color: [176, 131, 58], zone: 2, active: true },
+      space: { value: 75, mode: 0, color: [140, 104, 67], zone: 3, active: true },
       memory: 50, focus: 'recent'
     };
 
@@ -641,7 +654,7 @@
       const s = 14 + (v / 100) * 32;
       memoryCore.style.width = s + 'px'; memoryCore.style.height = s + 'px';
       const g = .3 + (v / 100) * .7;
-      memoryCore.style.boxShadow = `0 0 ${16 * g}px rgba(167,139,250,${.6 * g}),0 0 ${32 * g}px rgba(124,58,237,${.4 * g})`;
+      memoryCore.style.boxShadow = `0 0 ${16 * g}px rgba(224,139,51,${.6 * g}),0 0 ${32 * g}px rgba(184,93,29,${.4 * g})`;
       document.querySelectorAll('.memory-ring').forEach(r => { r.style.animationDuration = (3 - (v / 100) * 2) + 's' });
     }
     updateMem();
