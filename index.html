@@ -9,15 +9,15 @@
   <style>
     :root {
       /* Dynamic Color Palette Variables */
-      --color-bg-main: #121413;
-      --color-plugin-frame: #1a1d1b;
-      --color-memory-orb-core: #9cb392;
-      --color-memory-orb-aura: #5c7352;
-      --color-memory-orb-highlight: #dbe3d5;
-      --color-motion: #94ab8d;
-      --color-texture: #7a9172;
-      --color-shape: #5f7558;
-      --color-space: #4d5e48;
+      --color-bg-main: #0a120c;
+      --color-plugin-frame: #121c15;
+      --color-memory-orb-core: #22c55e;
+      --color-memory-orb-aura: #15803d;
+      --color-memory-orb-highlight: #86efac;
+      --color-motion: #10b981;
+      --color-texture: #65a30d;
+      --color-shape: #059669;
+      --color-space: #166534;
     }
 
     body {
@@ -623,11 +623,11 @@
     const canvas = document.getElementById('fluidCanvas'), ctx = canvas.getContext('2d');
 
     const state = {
-      motion: { value: 35, mode: 0, color: [148, 171, 141], zone: 0, active: true },
-      texture: { value: 60, mode: 0, color: [122, 145, 114], zone: 1, active: true },
-      shape: { value: 20, mode: 0, color: [95, 117, 88], zone: 2, active: true },
-      space: { value: 75, mode: 0, color: [77, 94, 72], zone: 3, active: true },
-      memory: 50, focus: 'recent'
+      motion:  { value: 35, mode: 0, color: [16, 185, 129] },
+  texture: { value: 60, mode: 0, color: [101, 163, 13] },
+  shape:   { value: 20, mode: 0, color: [5, 150, 105] },
+  space:   { value: 75, mode: 0, color: [22, 101, 52] },
+  memory: 50, focus: 'recent'
     };
 
     const transitions = [];
