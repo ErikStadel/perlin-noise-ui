@@ -622,12 +622,12 @@
     const perlinA = new PerlinNoise3D(42), perlinB = new PerlinNoise3D(137);
     const canvas = document.getElementById('fluidCanvas'), ctx = canvas.getContext('2d');
 
-    const state = {
-      motion:  { value: 35, mode: 0, color: [16, 185, 129] },
-  texture: { value: 60, mode: 0, color: [101, 163, 13] },
-  shape:   { value: 20, mode: 0, color: [5, 150, 105] },
-  space:   { value: 75, mode: 0, color: [22, 101, 52] },
-  memory: 50, focus: 'recent'
+     const state = {
+      motion: { value: 35, mode: 0, color: [16, 185, 129], zone: 0, active: true },
+      texture: { value: 60, mode: 0, color: [101, 163, 13], zone: 1, active: true },
+      shape: { value: 20, mode: 0, color: [5, 150, 105], zone: 2, active: true },
+      space: { value: 75, mode: 0, color: [22, 101, 52], zone: 3, active: true },
+      memory: 50, focus: 'recent'
     };
 
     const transitions = [];
